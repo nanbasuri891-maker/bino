@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美脳の秘訣｜美脳調律プログラム</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14151A;
+    --ink-soft:#22242C;
+    --steel:#8890A0;
+    --cool:#7C8CF8;
+    --cool-dim:#4B4F82;
+    --paper:#F3E8DD;
+    --paper-deep:#EADCC9;
+    --text-dark:#1E1B18;
+    --text-light:#F4EFE7;
+    --rose:#C1546E;
+    --rose-deep:#9E3E56;
+    --ochre:#E3A75A;
+    --line-light:rgba(20,21,26,0.12);
+    --line-dark:rgba(244,239,231,0.14);
+    --font-display:'Shippori Mincho B1', serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--paper);
+    color:var(--text-dark);
+    line-height:1.9;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    z-index:-2;
+    background-image:url('bg-silk-toned.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    transform:translateZ(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 22px;} }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:0.5;}
+  h1,h2,h3{font-family:var(--font-display); font-weight:600; letter-spacing:0.01em;}
+  .waveform{width:100%; height:64px; display:block;}
+  .waveform path{fill:none; stroke-width:2;}
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+    mix-blend-mode:difference;
+    color:#fff;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    pointer-events:none;
+  }
+  .nav span{pointer-events:auto;}
+  .nav .logo{
+    height:38px;
+    width:auto;
+    filter:brightness(0) invert(1);
+  }
+  @media (max-width:560px){
+    .nav .logo{height:30px;}
+  }
+  .hero{position:relative; min-height:100vh; display:flex; flex-direction:column;}
+  .hero-split{
+    flex:1; display:grid; grid-template-columns:1fr 0.86fr 1fr; min-height:80vh;
+  }
+  @media (max-width:860px){ .hero-split{grid-template-columns:1fr; min-height:auto;} }
+  .hero-ai{
+    background:var(--ink);
+    color:var(--text-light);
+    padding:88px 40px 64px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-ai::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(124,140,248,0.06) 0px, rgba(124,140,248,0.06) 1px, transparent 1px, transparent 64px),
+      repeating-linear-gradient(0deg, rgba(124,140,248,0.06) 0px, rgba(124,140,248,0.06) 1px, transparent 1px, transparent 64px);
+    pointer-events:none;
+  }
+  .hero-human{
+    background:var(--paper);
+    color:var(--text-dark);
+    padding:88px 40px 64px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative;
+  }
+  .hero-collab{
+    background:var(--rose-deep);
+    color:var(--text-light);
+    padding:64px 32px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center;
+    position:relative;
+    border-left:1px solid var(--line-dark);
+    border-right:1px solid var(--line-dark);
+  }
+  .hero-collab .eyebrow{color:var(--ochre); justify-content:center;}
+  .hero-collab .hero-line{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(22px, 3vw, 32px);
+    line-height:1.55;
+    margin-top:24px;
+  }
+  .hero-collab-tags{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em; opacity:0.8; margin-top:24px;
+  }
+  @media (max-width:860px){
+    .hero-ai, .hero-human{padding:64px 24px 40px;}
+    .hero-collab{padding:48px 24px; border-left:none; border-right:none; border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark);}
+  }
+  .hero-strap{
+    background:var(--rose);
+    color:var(--text-light);
+    padding:22px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.04em;
+    flex-wrap:wrap;
+  }
+  .hero-strap b{font-family:var(--font-display); font-size:16px; font-weight:600; letter-spacing:0.02em;}
+  .hero-tag{position:relative; z-index:1;}
+  .hero-ai .eyebrow{color:var(--cool);}
+  .hero-human .eyebrow{color:var(--rose-deep);}
+  .hero-line{
+    font-size:clamp(26px, 3.6vw, 40px);
+    line-height:1.42;
+    margin-top:28px;
+    position:relative; z-index:1;
+  }
+  .hero-ai .hero-line{font-family:var(--font-mono); font-weight:500; letter-spacing:-0.01em;}
+  .hero-human .hero-line{font-family:var(--font-display); font-weight:600;}
+  .hero-foot{
+    position:relative; z-index:1;
+    font-size:14px;
+    opacity:0.72;
+    max-width:38ch;
+    margin-top:40px;
+  }
+  .hero-human .hero-foot{font-family:var(--font-body);}
+  .hero-ai .hero-foot{font-family:var(--font-mono); font-size:12.5px;}
+  section{position:relative;}
+  .pad{padding:120px 0;}
+  @media (max-width:720px){ .pad{padding:76px 0;} }
+  .section-head{max-width:640px; margin-bottom:64px;}
+  .section-head h2{font-size:clamp(26px,3.4vw,38px); margin-top:20px; line-height:1.5;}
+  .section-head p{margin-top:20px; font-size:15.5px; opacity:0.82; max-width:52ch;}
+  .dark{background:rgba(20,21,26,0.93); color:var(--text-light);}
+  .dark .eyebrow{color:var(--cool);}
+  .dark .section-head p{opacity:0.66;}
+  .light{background:rgba(243,232,221,0.38); color:var(--text-dark); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);}
+  .light .eyebrow{color:var(--rose-deep);}
+  .problem-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:start;
+  }
+  @media (max-width:860px){ .problem-grid{grid-template-columns:1fr; gap:40px;} }
+  .problem-quote{
+    font-family:var(--font-display);
+    font-size:clamp(22px,2.6vw,30px);
+    line-height:1.85;
+    font-weight:500;
+  }
+  .problem-quote em{font-style:normal; color:var(--rose-deep); border-bottom:1px solid var(--rose); padding-bottom:2px;}
+  .problem-list{border-top:1px solid var(--line-light);}
+  .problem-list div{
+    padding:22px 0; border-bottom:1px solid var(--line-light);
+    display:grid; grid-template-columns:70px 1fr; gap:18px;
+  }
+  .problem-list .num{font-family:var(--font-mono); font-size:12px; color:var(--rose-deep); padding-top:3px;}
+  .problem-list p{font-size:14.5px; opacity:0.85;}
+  .axis-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-dark); border:1px solid var(--line-dark); margin-top:8px;}
+  @media (max-width:860px){ .axis-grid{grid-template-columns:1fr;} }
+  .axis-card{background:var(--ink); padding:44px 36px;}
+  .axis-card .eyebrow{color:var(--cool); margin-bottom:22px;}
+  .axis-card h3{font-family:var(--font-mono); font-size:18px; font-weight:500; letter-spacing:0.02em; margin-bottom:16px; color:var(--text-light);}
+  .axis-card p{font-size:14px; opacity:0.68; line-height:1.85;}
+  .axis-card.accent{background:var(--cool-dim);}
+  .switch-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-light); border:1px solid var(--line-light); margin:44px 0;}
+  @media (max-width:720px){ .switch-grid{grid-template-columns:repeat(2,1fr);} }
+  .switch-cell{background:var(--paper); padding:20px 16px;}
+  .switch-cell .num{font-family:var(--font-mono); font-size:11px; color:var(--rose-deep); display:block; margin-bottom:8px;}
+  .switch-cell p{font-size:13.5px; opacity:0.8; margin:0;}
+  .flow-steps{display:flex; align-items:center; flex-wrap:wrap; gap:0; margin:44px 0;}
+  .flow-step{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.02em;
+    border:1px solid var(--line-light); padding:12px 18px; border-radius:100px; opacity:0.85; white-space:nowrap;
+  }
+  .flow-arrow{font-family:var(--font-mono); opacity:0.35; padding:0 10px; font-size:14px;}
+  .flow-caption{font-family:var(--font-mono); font-size:11px; opacity:0.5; margin-top:14px; display:block;}
+  .compare-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:48px 0 12px;}
+  @media (max-width:720px){ .compare-grid{grid-template-columns:1fr;} }
+  .compare-card{border:1px solid var(--line-light); padding:32px 28px;}
+  .compare-card.fixed{border-top:3px solid var(--rose);}
+  .compare-card.tuned{border-top:3px solid var(--cool-dim);}
+  .compare-card .c-label{font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.06em; opacity:0.6; display:block; margin-bottom:18px;}
+  .compare-card .c-flow{font-family:var(--font-display); font-size:15px; line-height:2.1;}
+  .compare-card .c-result{margin-top:20px; font-size:13px; opacity:0.75;}
+  .example-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:48px 0;}
+  @media (max-width:960px){ .example-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:640px){ .example-grid{grid-template-columns:1fr;} }
+  .example-card{border-left:3px solid var(--rose); padding:6px 0 6px 26px;}
+  .example-card.calm{border-left-color:var(--cool-dim);}
+  .example-card.neutral{border-left-color:var(--ochre);}
+  .example-card .e-num{font-family:var(--font-mono); font-size:11px; opacity:0.5; margin-bottom:10px; display:block;}
+  .example-card h4{font-family:var(--font-display); font-size:17.5px; margin-bottom:14px; line-height:1.6;}
+  .example-card p{font-size:13.5px; opacity:0.78;}
+  .expression-lead{max-width:640px; margin-bottom:80px;}
+  .expression-lead .lead-line{
+    font-family:var(--font-display); font-size:clamp(20px,2.6vw,27px); color:var(--text-light);
+    line-height:1.7; margin-bottom:26px; font-weight:600;
+  }
+  .expression-lead p{font-size:14px; opacity:0.7; margin-bottom:18px;}
+  .expression-lead .lead-close{
+    font-family:var(--font-display); font-size:15.5px; opacity:1; color:var(--cool);
+    border-top:1px solid var(--line-dark); padding-top:24px; margin-top:8px;
+  }
+  .future-list{border-top:1px solid var(--line-light); margin:44px 0;}
+  .future-list div{
+    padding:20px 0; border-bottom:1px solid var(--line-light);
+    display:flex; gap:16px; align-items:baseline; font-size:14.5px; opacity:0.85;
+  }
+  .future-list .f-mark{font-family:var(--font-mono); font-size:12px; color:var(--rose-deep); flex-shrink:0;}
+  .wave-strip{background:var(--ink); padding:0;}
+  .products{background:linear-gradient(180deg, var(--ink) 0%, var(--ink) 46%, var(--paper) 46%, var(--paper) 100%);}
+  .product-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  @media (max-width:860px){ .product-grid{grid-template-columns:1fr;} }
+  .product-card{
+    border-radius:2px;
+    padding:48px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .product-card.hiiro{
+    background:var(--rose-deep);
+    color:var(--text-light);
+  }
+  .product-card.fura{
+    background:var(--ink-soft);
+    color:var(--text-light);
+    border:1px solid var(--line-dark);
+  }
+  .product-card .p-eyebrow{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.7;
+  }
+  .product-card h3{font-size:34px; margin:18px 0 6px; font-weight:600;}
+  .product-card .p-sub{font-family:var(--font-mono); font-size:12px; opacity:0.75; letter-spacing:0.04em; margin-bottom:26px;}
+  .product-card p.desc{font-size:14.5px; opacity:0.88; max-width:42ch; margin-bottom:28px;}
+  .product-card ul{list-style:none;}
+  .product-card li{
+    font-size:13px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.16);
+    display:flex; gap:12px; opacity:0.85;
+  }
+  .product-card li:last-child{border-bottom:1px solid rgba(255,255,255,0.16);}
+  .product-card li::before{content:"—"; opacity:0.5;}
+  .guide-note{
+    max-width:1180px; margin:56px auto 0; padding:0 32px;
+  }
+  .guide-note .box{
+    border:1px solid var(--line-light);
+    padding:28px 32px;
+    font-size:14px;
+    display:flex; gap:20px; align-items:flex-start;
+    background:rgba(20,21,26,0.03);
+  }
+  .guide-note b{font-family:var(--font-display); font-weight:600;}
+  .ref-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:56px;}
+  @media (max-width:860px){ .ref-grid{grid-template-columns:1fr;} }
+  .ref-card{background:var(--ink-soft); border:1px solid var(--line-dark); overflow:hidden;}
+  .ref-card-head{padding:22px 24px 0;}
+  .ref-card .p-eyebrow{font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cool); opacity:0.85;}
+  .ref-card h4{font-family:var(--font-display); font-size:20px; color:var(--text-light); margin:10px 0 4px; font-weight:600;}
+  .ref-card .ref-sub{font-family:var(--font-mono); font-size:11.5px; color:var(--text-light); opacity:0.55; margin-bottom:18px;}
+  .ref-frame{width:100%; aspect-ratio:9/16; background:#000; display:block; position:relative;}
+  .ref-frame iframe, .ref-frame video{width:100%; height:100%; object-fit:cover; border:0; display:block;}
+  .ref-play-btn{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:var(--rose); color:var(--text-light);
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
+    padding:14px 26px; border:none; border-radius:100px; cursor:pointer;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .ref-play-btn:hover{background:var(--rose-deep); transform:translate(-50%,-50%) scale(1.05);}
+  .ref-card-foot{padding:16px 24px 22px; font-size:12.5px; color:var(--text-light); opacity:0.6;}
+  .timeline{margin-top:56px; position:relative;}
+  .timeline::before{
+    content:""; position:absolute; left:0; right:0; top:13px; height:1px; background:var(--line-light);
+  }
+  @media (max-width:720px){ .timeline::before{display:none;} }
+  .timeline-row{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  @media (max-width:900px){ .timeline-row{grid-template-columns:1fr 1fr; gap:32px;} }
+  @media (max-width:560px){ .timeline-row{grid-template-columns:1fr; gap:36px;} }
+  .t-item{position:relative; padding-top:36px;}
+  .t-item::before{
+    content:""; position:absolute; top:0; left:0; width:9px; height:9px; border-radius:50%;
+    background:var(--rose); border:2px solid var(--paper); box-shadow:0 0 0 1px var(--rose);
+  }
+  .t-item .t-eyebrow{font-family:var(--font-mono); font-size:11px; color:var(--rose-deep); letter-spacing:0.08em;}
+  .t-item h4{font-family:var(--font-display); font-size:19px; margin:12px 0 10px; font-weight:600;}
+  .t-item p{font-size:13.5px; opacity:0.78;}
+  .model-diagram{margin:48px 0 8px; opacity:0.92;}
+  .model-diagram svg{width:100%; height:auto; max-width:720px; margin:0 auto; display:block;}
+  .method-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:48px;}
+  .method-tags span{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.03em;
+    border:1px solid var(--line-light); padding:9px 16px; border-radius:100px; opacity:0.85;
+  }
+  .pattern-link{
+    display:inline-block; margin-top:14px; font-family:var(--font-mono); font-size:12.5px;
+    color:var(--rose-deep); border-bottom:1px solid var(--rose); padding-bottom:2px; text-decoration:none;
+  }
+  .text-link{color:var(--rose-deep); border-bottom:1px solid var(--rose); padding-bottom:1px; text-decoration:none;}
+  .lightbox{
+    position:fixed; inset:0; background:rgba(20,21,26,0.92); z-index:100;
+    display:flex; align-items:center; justify-content:center; padding:40px;
+    opacity:0; pointer-events:none; transition:opacity .25s ease;
+    overflow:auto; -webkit-overflow-scrolling:touch;
+  }
+  .lightbox.open{opacity:1; pointer-events:auto;}
+  .lightbox img{
+    max-width:min(900px,92vw); max-height:88vh; border-radius:4px;
+    transition:transform .3s ease; cursor:zoom-in; touch-action:pinch-zoom;
+  }
+  .lightbox img.zoomed{
+    max-width:none; max-height:none; width:min(1800px,220vw);
+    cursor:zoom-out; margin:auto;
+  }
+  .lightbox-close{
+    position:absolute; top:28px; right:32px; color:var(--text-light);
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
+    background:none; border:1px solid var(--line-dark); padding:10px 18px; border-radius:100px; cursor:pointer;
+  }
+  .cta{
+    background:rgba(243,232,221,0.38);
+    color:var(--text-dark);
+    text-align:center;
+    padding:140px 0 120px;
+  }
+  .cta .eyebrow{color:var(--ochre); justify-content:center;}
+  .cta h2{
+    font-size:clamp(20px,2.6vw,28px);
+    margin:22px auto 20px;
+    max-width:18ch;
+    line-height:1.6;
+  }
+  .cta p{opacity:0.68; max-width:46ch; margin:0 auto 44px; font-size:15px;}
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:14px;
+    background:var(--rose);
+    color:var(--text-light);
+    font-family:var(--font-mono);
+    font-size:14px; letter-spacing:0.05em;
+    padding:20px 40px;
+    border-radius:2px;
+    text-decoration:none;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .cta-btn:hover{background:var(--rose-deep); transform:translateY(-2px);}
+  .cta-sub{margin-top:26px; font-family:var(--font-mono); font-size:11.5px; opacity:0.4; letter-spacing:0.06em;}
+  .cta-logo{
+    display:block;
+    height:32px;
+    width:auto;
+    margin:26px auto 0;
+    opacity:0.85;
+  }
+  footer{
+    background:rgba(20,21,26,0.95);
+    color:var(--text-light);
+    padding:40px 0;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    opacity:0.5;
+    letter-spacing:0.04em;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .float{
+    will-change:transform;
+    transform:translateY(var(--py, 0px));
+  }
+  .float.bob{ animation:bob 7.5s ease-in-out infinite; }
+  .float.bob:nth-of-type(2n){ animation-delay:-2.4s; animation-duration:8.6s; }
+  .float.bob:nth-of-type(3n){ animation-delay:-4.8s; animation-duration:6.4s; }
+  @keyframes bob{
+    0%,100%{ transform:translateY(var(--py, 0px)); }
+    50%{ transform:translateY(calc(var(--py, 0px) - 8px)); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .float.bob{ animation:none; }
+  }
+  .community{background:rgba(243,232,221,0.38);}
+  .community-inner{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+  }
+  @media (max-width:860px){ .community-inner{grid-template-columns:1fr; gap:36px;} }
+  .community-copy h2{font-size:clamp(26px,3.4vw,36px); line-height:1.55; margin-top:20px;}
+  .community-copy p{margin-top:22px; font-size:14.5px; opacity:0.8; max-width:46ch;}
+  .community-panel{
+    background:rgba(255,255,255,0.35); color:var(--text-dark);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    border:1px solid var(--line-light);
+    padding:44px 38px;
+  }
+  .community-panel .c-eyebrow{font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--rose-deep); opacity:0.9;}
+  .community-panel .c-name{font-family:var(--font-display); font-size:26px; font-weight:600; margin:16px 0 20px;}
+  .community-panel ul{list-style:none;}
+  .community-panel li{
+    font-size:13.5px; padding:14px 0; border-top:1px solid var(--line-light); opacity:0.82; display:flex; gap:12px;
+  }
+  .community-panel li:last-child{border-bottom:1px solid var(--line-light);}
+  .community-panel li::before{content:"—"; opacity:0.5;}
+  .enfra-logo{
+    width:180px;
+    margin-bottom:28px;
+    opacity:0.92;
+  }
+  @media (max-width:560px){
+    .enfra-logo{width:140px;}
+  }
+  .future-art{
+    margin:40px auto 8px;
+    max-width:560px;
+  }
+  .future-art img{
+    width:100%;
+    height:auto;
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span><img class="logo" src="logo.png" alt="美脳調律プログラム"></span>
+  <span>ヒト × AI × 知能</span>
+</nav>
+<div style="height:96px;"></div>
+
+<!-- ===================== 01 MECHANISM ===================== -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">01 — mechanism</span>
+      <h2>脳には、7つの<br>「決めつけスイッチ」がある。</h2>
+      <p>事前の信念。感情。インセンティブ。主体性。好奇心。心の状態。他人の目。これは全部、脳が生き延びるために持っている標準装備です。でも同時に、この7つが働くたびに、脳は「解釈」を固定させようとします。</p>
+    </div>
+    <div class="switch-grid reveal">
+      <div class="switch-cell"><span class="num">01</span><p>事前の信念</p></div>
+      <div class="switch-cell"><span class="num">02</span><p>感情</p></div>
+      <div class="switch-cell"><span class="num">03</span><p>インセンティブ</p></div>
+      <div class="switch-cell"><span class="num">04</span><p>主体性</p></div>
+      <div class="switch-cell"><span class="num">05</span><p>好奇心</p></div>
+      <div class="switch-cell"><span class="num">06</span><p>心の状態</p></div>
+      <div class="switch-cell"><span class="num">07</span><p>他人の目</p></div>
+    </div>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch;">曖昧な言葉、素っ気ない態度、はっきりしない相手の反応——意味が定まっていない出来事に出会うと、脳は放置できません。過去の記憶を検索し、一番早く見つかった「こういうことだ」という決めつけを、そのまま流し込みます。この、脳が勝手に下す意味づけ・決めつけのことを、ここでは「解釈」と呼びます。</p>
+    <div class="flow-steps reveal" style="color: var(--rose);">
+      <span class="flow-step" style="border-color: var(--rose); color: var(--rose);">曖昧な出来事</span>
+      <span class="flow-arrow" style="color: var(--rose);">→</span>
+      <span class="flow-step" style="border-color: var(--rose); color: var(--rose);">記憶を検索</span>
+      <span class="flow-arrow" style="color: var(--rose);">→</span>
+      <span class="flow-step" style="border-color: var(--rose); color: var(--rose);">意味を代入</span>
+      <span class="flow-arrow" style="color: var(--rose);">→</span>
+      <span class="flow-step" style="border-color: var(--rose); color: var(--rose);">反応が増幅</span>
+    </div>
+    <span class="flow-caption" style="color: var(--rose); opacity: 0.85;"><strong>解釈が固定されるまでの4段階——相手の言葉ではなく、自分の記憶に反応している</strong></span>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch; margin-top:36px;">その結果、あなたが反応しているのは、相手の言葉ではなく、自分の記憶かもしれません。一つひとつは正常な機能です。でも7つが同時に働き続けると、解釈は暴走し、固定されます。そして一度固定された解釈は、「事実」として体験されるようになります。</p>
+  </div>
+</section>
+
+<!-- ===================== 02 TUNING ===================== -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">02 — tuning</span>
+      <h2>美脳は<br>解釈の暴走が起きない状態をキープすること。</h2>
+      <p>暴走をゼロにすることはできません。7つのスイッチは、生きている限り働き続けます。でも、暴走が起きたときに気づき、記憶ではなく今の事実に意味を選び直せる回数を、増やすことはできます。その回数が増えることが、煩悩から美脳に調律され整った状態です。</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card fixed float bob" data-depth="0.05">
+        <span class="c-label">固定された状態</span>
+        <div class="c-flow">曖昧な刺激<br>↓ 決めつけ<br>↓ 同じ反応</div>
+        <div class="c-result">反応が繰り返される</div>
+      </div>
+      <div class="compare-card tuned float bob" data-depth="0.08">
+        <span class="c-label">調律された状態</span>
+        <div class="c-flow">曖昧な刺激<br>↓ 選び直す<br>↓ 次の関係へ</div>
+        <div class="c-result">反応が積み重ならず、循環していく</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 EXAMPLE ===================== -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">03 — example</span>
+      <h2>調律されていない状態は、<br>すでに日常の中にあります。</h2>
+    </div>
+    <div class="example-grid reveal">
+      <div class="example-card float bob" data-depth="0.04">
+        <span class="e-num">例 1</span>
+        <h4>恋愛の「感情表現」が「愛着問題」に変わる時</h4>
+        <p>恋愛初期の高揚感は、時間が経てば自然に落ち着いていくのが本来の流れです。落ち着いたあとに残る安心感や信頼感こそが、長く続く関係の土台になります。ところが、その落ち着きを「冷めた」「もう好きじゃないのかも」と解釈してしまうと、そこから先は違う動きが始まります。相手の些細な態度に、いちいち意味を探しにいく。確認しないと不安が収まらない。「この人じゃなきゃ無理」という言葉が増えていく。これは感情が壊れているのではなく、一つの解釈(見捨てられるかもしれない)が固定され、すべての出来事がその解釈で処理されている状態です。</p>
+      </div>
+      <div class="example-card calm float bob" data-depth="0.07">
+        <span class="e-num">例 2</span>
+        <h4>元気に見えて、内側が休めないままシャットダウン</h4>
+        <p>SNSやスマホを見る時間が長くなるほど、脳は休む間もなく情報を検索し続けます。仕事も人付き合いも表面上は問題なくこなせているのに、良いことがあっても実感が湧きにくく、小さな引っかかりだけが頭から離れない——いわゆる「ステルス鬱」と呼ばれる状態も、構造は同じです。脳は本来、危険な情報を優先して検索するようにできているため、一度この検索パターンが固定されると、本人の性格や気持ちの強さとは関係なく、「良いことはスルーされ、悪いことだけが増幅される」状態が続いてしまいます。</p>
+      </div>
+      <div class="example-card neutral float bob" data-depth="0.1">
+        <span class="e-num">例 3</span>
+        <h4>「言語化が苦手」を「発達障害」と誤解してしまうリスク</h4>
+        <p>感情をうまく言葉にできないだけなのに、それを「発達障害かもしれない」と自己解釈してしまう大人が、いま増えています。SNSやAI時代では、「俯瞰」がひとつのキーワードです。相手の視点(youフォーカス)に立てず、自分の視点(meフォーカス)で止まっていることに、本人がまだ気づいていないだけかもしれません。それを障害だと決めつけてしまうこと自体が、本当の課題から目をそらすリスクになります。「感情と感覚の再学習」が、新時代のリテラシーです。</p>
+      </div>
+    </div>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch;">解釈を重ねると・・・</p>
+    <div class="future-list reveal" style="margin:24px 0;">
+      <div><span class="f-mark">—</span><span>自分にとって「事実」でも他人と共有する「事実」がない</span></div>
+      <div><span class="f-mark">—</span><span>実際やる「作業の仕上がり」を共有できない</span></div>
+      <div><span class="f-mark">—</span><span>実際はない出来事を実際あったかのように話す</span></div>
+    </div>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch; margin-top:24px;">固定された解釈は、自分では気づけません。でもその代わりに、人間関係のパターンとして、外側に可視化されます。同じタイプの人を好きになる。同じ理由でケンカする。同じ場面で、同じ言葉に傷つく。繰り返されるパターンこそが、固定された解釈の輪郭です。「縁起とフラクタル セッション」は、そのパターンに触れる、最初の入口になります。</p>
+    <img class="reveal" src="フラクタル.jpg" alt="なぜか同じ人間関係を繰り返してしまう" style="margin-top:32px; border-radius:2px; cursor:zoom-in;" onclick="openLightbox()">
+    <div class="reveal" style="margin-top:40px;">
+      <p style="font-size:14px; opacity:0.7; margin-bottom:16px;">こんなことはありませんか？</p>
+      <div class="future-list" style="margin-top:0;">
+        <div><span class="f-mark">—</span><span>気づくと相談役になる</span></div>
+        <div><span class="f-mark">—</span><span>職場が変わっても役割が変わらない</span></div>
+        <div><span class="f-mark">—</span><span>気づくと人を支えている</span></div>
+        <div><span class="f-mark">—</span><span>恋愛でも友人関係でも似たパターンになる</span></div>
+        <div><span class="f-mark">—</span><span>なぜか同じ人間関係になる</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03.5 BEFORE THE SESSION ===================== -->
+<section class="light pad" id="before-session">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">03.5 — before the session</span>
+      <h2>「相手が変わること」に、<br>自分の時間を費やしていませんか？</h2>
+    </div>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch;">「離れる自由」はある。でも「見極める」技術を、これまで教わってこなかっただけ。相手が変わろうとしているのか、ただ変わる気がないだけなのか——この違いを見分ける物差しを、持たされてこなかっただけ。</p>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch; margin-top:24px;">ここ数年のトレンドで、親や愛着の問題に帰結することに違和感を感じているなら——あなたは「再び大人になる」自由を、持っているのかもしれません。</p>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch; margin-top:24px;">経済的に困っていない。仕事もある。今すぐ一人になっても、生活は崩れない。それでも、同じような相手、同じようなすれ違いを、また繰り返してしまう。</p>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch; margin-top:24px;">自立して他責にしない人ほど、「私の忍耐が足りないのかも」「私がもっと理解すれば」と、判断を自分の内側に持ち帰り続けてしまう。選べる状態にあるのに、選べない状態にいる人と同じところで、足踏みが続きます。</p>
+    <p class="reveal" style="font-size:14.5px; opacity:0.85; max-width:60ch; margin-top:24px;">自分を疑うべき場面で、相手のせいにして関係を切ってしまう。相手を見極めるべき場面で、自分を責めて消耗し続ける。変わるべきは自分か、離れるべきは相手か——それが、はっきり分かるようになると、分けて見られるようになると、迷う時間そのものがなくなります。</p>
+    <p class="reveal" style="font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--rose-deep); margin-top:40px; max-width:52ch; line-height:1.8;">我慢ができる、自己犠牲ができる<br>——それが「これまでの大人」。<br>あなたには今ここから<br>「大人像」を選び直す自由があります。</p>
+    <a href="https://fractalhistyle.wixsite.com/my-site-5" class="text-link reveal" style="display:inline-block; margin-top:28px; font-family:var(--font-mono); font-size:13px;" target="_blank" rel="noopener">「大人になることの再定義」はこちら →</a>
+  </div>
+</section>
+
+<!-- ===================== 04 縁起とフラクタル SESSION ===================== -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <img class="enfra-logo" src="enfra-logo.png" alt="縁起とフラクタル">
+      <span class="eyebrow">04 — 縁起とフラクタル セッション</span>
+      <h2>「縁起とフラクタル」は、縁の起こりが<br>自己相似的にフラクタル増幅するという関係性モデル</h2>
+      <p>固定された解釈は、人間関係のパターンとして可視化されます。人間関係のパターンに顕れる、自分では気づけない盲点に<a href="https://fractalhistyle.wixsite.com/sessonwebsite" class="pattern-link" target="_blank" rel="noopener">フォーカスしたセッション</a>に進みます。環境のチカラをかりて、成長する。</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-row">
+        <div class="t-item">
+          <span class="t-eyebrow">step 01</span>
+          <h4>関係パターンを解析する</h4>
+          <p>人間関係の中に繰り返し現れるパターンから、自分でも気づいていない感覚・感情の癖を洗い出します。</p>
+          <a href="#pattern-lightbox" class="pattern-link" onclick="openLightbox(); return false;">→ 人間関係のパターンとは</a>
+        </div>
+        <div class="t-item">
+          <span class="t-eyebrow">step 02</span>
+          <h4>スコトーマを外す</h4>
+          <p>無意識の思い込みによるスコトーマ(盲点)は、自己相似のまま他者相似としてフラクタルに増殖します。その連鎖に気づき、断ち切るタイミングを選ぶことができます。</p>
+        </div>
+        <div class="t-item">
+          <span class="t-eyebrow">step 03</span>
+          <h4>予測範囲の外にゴールを置く</h4>
+          <p>専門ガイドがスコトーマを外すことで自己効力感が上がり、自己実現のスピードが上がります。予測範囲の外にゴールを置く伴走を、個別セッションで行います。</p>
+        </div>
+        <div class="t-item">
+          <span class="t-eyebrow">step 04</span>
+          <h4>自己実現を飛躍させる</h4>
+          <p>過去の出来事は未来に1ミクロンも関係ない。エフィカシーを軸に、環境のチカラをかりて「成長」そのものを飛躍させます。</p>
+        </div>
+      </div>
+    </div>
+    <p class="reveal" style="font-family:var(--font-display); font-weight:700; color:var(--rose-deep); font-size:16px; margin-top:48px;">解釈で積みあがった記憶で下がった重心のバランスをとる5つのポイント</p>
+    <div class="method-tags reveal">
+      <span>ソマティック</span>
+      <span>エモーショナルフォーカス</span>
+      <span>エフィカシー</span>
+      <span>スコトーマ</span>
+      <span>カオス理論</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 05 FUTURE ===================== -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">05 — future</span>
+      <h2>美脳になると「選ばれる」から<br>「選べる」にシフトする</h2>
+    </div>
+    <div class="future-list reveal">
+      <div><span class="f-mark">→</span><span>もう一度、確認しないと不安になる関係が減っていく。</span></div>
+      <div><span class="f-mark">→</span><span>同じ人と、同じケンカを繰り返さなくなる。</span></div>
+      <div><span class="f-mark">→</span><span>AIに、何を再現させたいかを自分の言葉で持てるようになる。</span></div>
+      <div><span class="f-mark">→</span><span>ビジネスのコンテンツが、借り物の言葉ではなく自分の感覚から作れるようになる。</span></div>
+      <div><span class="f-mark">→</span><span>人との共同作業で、温度感のズレに気づき、すり合わせられるようになる。</span></div>
+      <div><span class="f-mark">→</span><span>理想的な関係性を、待つのではなく自分の手で築けるようになる。</span></div>
+    </div>
+    <div class="future-art reveal">
+      <img src="sun-moon-couple.png" alt="太陽と月、向き合う二人">
+    </div>
+    <p class="reveal" style="font-size:15px; opacity:0.85; margin-top:24px;"><strong>あなたの脳が、現実をどう受け取るかが変わります。</strong></p>
+    <div class="method-tags reveal">
+      <span>恋愛</span>
+      <span>婚活</span>
+      <span>結婚</span>
+      <span>友人</span>
+      <span>仕事</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 COMMUNITY / 美脳調律寮 ===================== -->
+<section class="community pad">
+  <div class="wrap">
+    <div class="community-inner">
+      <div class="community-copy reveal">
+        <span class="eyebrow">07 — community</span>
+        <h2>「美脳調律寮」</h2>
+        <p style="color: var(--rose); font-family: var(--font-display); font-size: 16px; margin-top: 22px;">レジリエンスの温室</p>
+      </div>
+      <div class="community-panel reveal float bob" data-depth="0.06">
+        <span class="c-eyebrow">residence</span>
+        <div class="c-name">美脳調律寮</div>
+        <ul>
+          <li>解釈の暴走が少ない、落ち着いた自己理解</li>
+          <li>自己効力感を育てる美脳人同士のつながり</li>
+          <li>お互いを高め合う、継続的な対話の場</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA (back to top) ===================== -->
+<section class="cta">
+  <div class="wrap">
+    <span class="eyebrow">back to top</span>
+    <h2 style="font-size:clamp(17px,2.1vw,22px); max-width:100%;"><strong>ここまで読んだあなたなら<br>もう「何を求めているのか」を<br>言葉にできるはずです。</strong></h2>
+    <p>あとはAIエージェントとの対話で、その輪郭を確かめてください。</p>
+    <a href="https://nanbasuri891-maker.github.io/bino/index.html#agents" class="cta-btn">緋色・フラに会いにいく →</a>
+    <img class="cta-logo" src="logo.png" alt="美脳調律プログラム">
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
+    <span>美脳調律プログラム</span>
+    <span>ヒト × AI × 知能</span>
+  </div>
+</footer>
+
+<!-- ===================== LIGHTBOX ===================== -->
+<div class="lightbox" id="pattern-lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">閉じる ✕</button>
+  <img id="lightbox-img" src="kankeisei-pattern.jpg" alt="人間関係のパターンとは" onclick="this.classList.toggle('zoomed')">
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+  function openLightbox(){
+    document.getElementById('pattern-lightbox').classList.add('open');
+  }
+  function closeLightbox(){
+    const lb = document.getElementById('pattern-lightbox');
+    lb.classList.remove('open');
+    document.getElementById('lightbox-img').classList.remove('zoomed');
+  }
+  const floatEls = document.querySelectorAll('.float');
+  let ticking = false;
+  function updateFloat(){
+    const y = window.scrollY;
+    floatEls.forEach(el=>{
+      const depth = parseFloat(el.dataset.depth || 0);
+      el.style.setProperty('--py', (y * depth * -0.12) + 'px');
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(updateFloat); ticking = true; }
+  }, {passive:true});
+</script>
+</body>
+</html>
