@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美脳調律プログラム｜AIに仕事をさせる側になる</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14151A;
+    --ink-soft:#22242C;
+    --steel:#8890A0;
+    --cool:#7C8CF8;
+    --cool-dim:#4B4F82;
+    --paper:#F3E8DD;
+    --paper-deep:#EADCC9;
+    --text-dark:#1E1B18;
+    --text-light:#F4EFE7;
+    --rose:#C1546E;
+    --rose-deep:#9E3E56;
+    --ochre:#E3A75A;
+    --line-light:rgba(20,21,26,0.12);
+    --line-dark:rgba(244,239,231,0.14);
+    --font-display:'Shippori Mincho B1', serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--paper);
+    color:var(--text-dark);
+    line-height:1.9;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 22px;} }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:0.5;}
+
+  h1,h2,h3{font-family:var(--font-display); font-weight:600; letter-spacing:0.01em;}
+
+  /* ---------- WAVEFORM DIVIDER (signature element) ---------- */
+  .waveform{width:100%; height:64px; display:block;}
+  .waveform path{fill:none; stroke-width:2;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+    mix-blend-mode:difference;
+    color:#fff;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    pointer-events:none;
+  }
+  .nav span{pointer-events:auto;}
+  .nav .logo{
+    height:38px;
+    width:auto;
+    filter:brightness(0) invert(1);
+  }
+  @media (max-width:560px){
+    .nav .logo{height:30px;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative; min-height:100vh; display:flex; flex-direction:column;}
+  .hero-split{
+    flex:1; display:grid; grid-template-columns:1fr 0.86fr 1fr; min-height:80vh;
+  }
+  @media (max-width:860px){ .hero-split{grid-template-columns:1fr; min-height:auto;} }
+
+  .hero-ai{
+    background:var(--ink);
+    color:var(--text-light);
+    padding:88px 40px 64px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-ai::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(124,140,248,0.06) 0px, rgba(124,140,248,0.06) 1px, transparent 1px, transparent 64px),
+      repeating-linear-gradient(0deg, rgba(124,140,248,0.06) 0px, rgba(124,140,248,0.06) 1px, transparent 1px, transparent 64px);
+    pointer-events:none;
+  }
+  .hero-human{
+    background:var(--paper);
+    color:var(--text-dark);
+    padding:88px 40px 64px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative;
+  }
+  .hero-collab{
+    background:var(--rose-deep);
+    color:var(--text-light);
+    padding:64px 32px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center;
+    position:relative;
+    border-left:1px solid var(--line-dark);
+    border-right:1px solid var(--line-dark);
+  }
+  .hero-collab .eyebrow{color:var(--ochre); justify-content:center;}
+  .hero-collab .hero-line{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(22px, 3vw, 32px);
+    line-height:1.55;
+    margin-top:24px;
+  }
+  .hero-collab-tags{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em; opacity:0.8; margin-top:24px;
+  }
+  @media (max-width:860px){
+    .hero-ai, .hero-human{padding:64px 24px 40px;}
+    .hero-collab{padding:48px 24px; border-left:none; border-right:none; border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark);}
+  }
+
+  .hero-strap{
+    background:var(--rose);
+    color:var(--text-light);
+    padding:22px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.04em;
+    flex-wrap:wrap;
+  }
+  .hero-strap b{font-family:var(--font-display); font-size:16px; font-weight:600; letter-spacing:0.02em;}
+
+  .hero-tag{position:relative; z-index:1;}
+  .hero-ai .eyebrow{color:var(--cool);}
+  .hero-human .eyebrow{color:var(--rose-deep);}
+
+  .hero-line{
+    font-size:clamp(26px, 3.6vw, 40px);
+    line-height:1.42;
+    margin-top:28px;
+    position:relative; z-index:1;
+  }
+  .hero-ai .hero-line{font-family:var(--font-mono); font-weight:500; letter-spacing:-0.01em;}
+  .hero-human .hero-line{font-family:var(--font-display); font-weight:600;}
+
+  .hero-foot{
+    position:relative; z-index:1;
+    font-size:14px;
+    opacity:0.72;
+    max-width:38ch;
+    margin-top:40px;
+  }
+  .hero-human .hero-foot{font-family:var(--font-body);}
+  .hero-ai .hero-foot{font-family:var(--font-mono); font-size:12.5px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{position:relative;}
+  .pad{padding:120px 0;}
+  @media (max-width:720px){ .pad{padding:76px 0;} }
+  .section-head{max-width:640px; margin-bottom:64px;}
+  .section-head h2{font-size:clamp(26px,3.4vw,38px); margin-top:20px; line-height:1.5;}
+  .section-head p{margin-top:20px; font-size:15.5px; opacity:0.82; max-width:52ch;}
+
+  .dark{background:var(--ink); color:var(--text-light);}
+  .dark .eyebrow{color:var(--cool);}
+  .dark .section-head p{opacity:0.66;}
+
+  .light{background:var(--paper); color:var(--text-dark);}
+  .light .eyebrow{color:var(--rose-deep);}
+
+  /* ---------- PROBLEM SECTION ---------- */
+  .problem-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:start;
+  }
+  @media (max-width:860px){ .problem-grid{grid-template-columns:1fr; gap:40px;} }
+  .problem-quote{
+    font-family:var(--font-display);
+    font-size:clamp(22px,2.6vw,30px);
+    line-height:1.85;
+    font-weight:500;
+  }
+  .problem-quote em{font-style:normal; color:var(--rose-deep); border-bottom:1px solid var(--rose); padding-bottom:2px;}
+  .problem-list{border-top:1px solid var(--line-light);}
+  .problem-list div{
+    padding:22px 0; border-bottom:1px solid var(--line-light);
+    display:grid; grid-template-columns:70px 1fr; gap:18px;
+  }
+  .problem-list .num{font-family:var(--font-mono); font-size:12px; color:var(--rose-deep); padding-top:3px;}
+  .problem-list p{font-size:14.5px; opacity:0.85;}
+
+  /* ---------- AXIS (三軸) SECTION ---------- */
+  .axis-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-dark); border:1px solid var(--line-dark); margin-top:8px;}
+  @media (max-width:860px){ .axis-grid{grid-template-columns:1fr;} }
+  .axis-card{background:var(--ink); padding:44px 36px;}
+  .axis-card .eyebrow{color:var(--cool); margin-bottom:22px;}
+  .axis-card h3{font-family:var(--font-mono); font-size:18px; font-weight:500; letter-spacing:0.02em; margin-bottom:16px; color:var(--text-light);}
+  .axis-card p{font-size:14px; opacity:0.68; line-height:1.85;}
+  .axis-card.accent{background:var(--cool-dim);}
+
+  /* ---------- 05 MECHANISM: switches + flow ---------- */
+  .switch-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-light); border:1px solid var(--line-light); margin:44px 0;}
+  @media (max-width:720px){ .switch-grid{grid-template-columns:repeat(2,1fr);} }
+  .switch-cell{background:var(--paper); padding:20px 16px;}
+  .switch-cell .num{font-family:var(--font-mono); font-size:11px; color:var(--rose-deep); display:block; margin-bottom:8px;}
+  .switch-cell p{font-size:13.5px; opacity:0.8; margin:0;}
+  .flow-steps{display:flex; align-items:center; flex-wrap:wrap; gap:0; margin:44px 0;}
+  .flow-step{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.02em;
+    border:1px solid var(--line-light); padding:12px 18px; border-radius:100px; opacity:0.85; white-space:nowrap;
+  }
+  .flow-arrow{font-family:var(--font-mono); opacity:0.35; padding:0 10px; font-size:14px;}
+  .flow-caption{font-family:var(--font-mono); font-size:11px; opacity:0.5; margin-top:14px; display:block;}
+
+  /* ---------- 06 TUNING: fixed vs tuned compare ---------- */
+  .compare-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:48px 0 12px;}
+  @media (max-width:720px){ .compare-grid{grid-template-columns:1fr;} }
+  .compare-card{border:1px solid var(--line-light); padding:32px 28px;}
+  .compare-card.fixed{border-top:3px solid var(--rose);}
+  .compare-card.tuned{border-top:3px solid var(--cool-dim);}
+  .compare-card .c-label{font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.06em; opacity:0.6; display:block; margin-bottom:18px;}
+  .compare-card .c-flow{font-family:var(--font-display); font-size:15px; line-height:2.1;}
+  .compare-card .c-result{margin-top:20px; font-size:13px; opacity:0.75;}
+
+  /* ---------- 07 EXAMPLE: paired case cards ---------- */
+  .example-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:48px 0;}
+  @media (max-width:960px){ .example-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:640px){ .example-grid{grid-template-columns:1fr;} }
+  .example-card{border-left:3px solid var(--rose); padding:6px 0 6px 26px;}
+  .example-card.calm{border-left-color:var(--cool-dim);}
+  .example-card.neutral{border-left-color:var(--ochre);}
+  .example-card .e-num{font-family:var(--font-mono); font-size:11px; opacity:0.5; margin-bottom:10px; display:block;}
+  .example-card h4{font-family:var(--font-display); font-size:17.5px; margin-bottom:14px; line-height:1.6;}
+  .example-card p{font-size:13.5px; opacity:0.78;}
+
+  /* ---------- 08 EXPRESSION lead (folded into agents section) ---------- */
+  .expression-lead{max-width:640px; margin-bottom:80px;}
+  .expression-lead .lead-line{
+    font-family:var(--font-display); font-size:clamp(20px,2.6vw,27px); color:var(--text-light);
+    line-height:1.7; margin-bottom:26px; font-weight:600;
+  }
+  .expression-lead p{font-size:14px; opacity:0.7; margin-bottom:18px;}
+  .expression-lead .lead-close{
+    font-family:var(--font-display); font-size:15.5px; opacity:1; color:var(--cool);
+    border-top:1px solid var(--line-dark); padding-top:24px; margin-top:8px;
+  }
+
+  /* ---------- 09 FUTURE: change list ---------- */
+  .future-list{border-top:1px solid var(--line-light); margin:44px 0;}
+  .future-list div{
+    padding:20px 0; border-bottom:1px solid var(--line-light);
+    display:flex; gap:16px; align-items:baseline; font-size:14.5px; opacity:0.85;
+  }
+  .future-list .f-mark{font-family:var(--font-mono); font-size:12px; color:var(--rose-deep); flex-shrink:0;}
+
+  /* ---------- 10 INVESTMENT: dark reveal ---------- */
+  .invest{background:var(--ink); color:var(--text-light);}
+  .invest .eyebrow{color:var(--ochre);}
+  .invest h2{color:var(--text-light);}
+  .invest .invest-core{
+    font-family:var(--font-display); font-size:clamp(19px,2.6vw,25px); color:var(--cool);
+    margin:32px 0; line-height:1.7; font-weight:600;
+  }
+  .invest .invest-close{
+    font-family:var(--font-display); font-size:16px; opacity:0.9; margin-top:28px;
+    border-top:1px solid var(--line-dark); padding-top:26px;
+  }
+  .invest .section-head p{opacity:0.66;}
+
+  /* ---------- WAVEFORM STRIP ---------- */
+  .wave-strip{background:var(--ink); padding:0;}
+
+  /* ---------- PRODUCTS ---------- */
+  .products{background:linear-gradient(180deg, var(--ink) 0%, var(--ink) 46%, var(--paper) 46%, var(--paper) 100%);}
+  .product-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  @media (max-width:860px){ .product-grid{grid-template-columns:1fr;} }
+  .product-card{
+    border-radius:2px;
+    padding:48px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .product-card.hiiro{
+    background:var(--rose-deep);
+    color:var(--text-light);
+  }
+  .product-card.fura{
+    background:var(--ink-soft);
+    color:var(--text-light);
+    border:1px solid var(--line-dark);
+  }
+  .product-card .p-eyebrow{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.7;
+  }
+  .product-card h3{font-size:34px; margin:18px 0 6px; font-weight:600;}
+  .product-card .p-sub{font-family:var(--font-mono); font-size:12px; opacity:0.75; letter-spacing:0.04em; margin-bottom:26px;}
+  .product-card p.desc{font-size:14.5px; opacity:0.88; max-width:42ch; margin-bottom:28px;}
+  .product-card ul{list-style:none;}
+  .product-card li{
+    font-size:13px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.16);
+    display:flex; gap:12px; opacity:0.85;
+  }
+  .product-card li:last-child{border-bottom:1px solid rgba(255,255,255,0.16);}
+  .product-card li::before{content:"—"; opacity:0.5;}
+
+  .guide-note{
+    max-width:1180px; margin:56px auto 0; padding:0 32px;
+  }
+  .guide-note .box{
+    border:1px solid var(--line-dark);
+    padding:28px 32px;
+    font-size:14px;
+    display:flex; gap:20px; align-items:flex-start;
+    background:var(--ink-soft);
+    color:var(--text-light);
+  }
+  .guide-note b{font-family:var(--font-display); font-weight:600;}
+
+  /* ---------- REFERENCE EXAMPLES ---------- */
+  .ref-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:56px;}
+  @media (max-width:860px){ .ref-grid{grid-template-columns:1fr;} }
+  .ref-card{background:var(--ink-soft); border:1px solid var(--line-dark); overflow:hidden;}
+  .ref-card-head{padding:22px 24px 0;}
+  .ref-card .p-eyebrow{font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cool); opacity:0.85;}
+  .ref-card h4{font-family:var(--font-display); font-size:20px; color:var(--text-light); margin:10px 0 4px; font-weight:600;}
+  .ref-card .ref-sub{font-family:var(--font-mono); font-size:11.5px; color:var(--text-light); opacity:0.55; margin-bottom:18px;}
+  .ref-frame{width:100%; aspect-ratio:9/16; background:#000; display:block; position:relative;}
+  .ref-frame iframe, .ref-frame video{width:100%; height:100%; object-fit:cover; border:0; display:block;}
+  .ref-play-btn{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:var(--rose); color:var(--text-light);
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
+    padding:14px 26px; border:none; border-radius:100px; cursor:pointer;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .ref-play-btn:hover{background:var(--rose-deep); transform:translate(-50%,-50%) scale(1.05);}
+  .ref-card-foot{padding:16px 24px 22px; font-size:12.5px; color:var(--text-light); opacity:0.6;}
+
+  /* ---------- SESSION / TIMELINE ---------- */
+  .timeline{margin-top:56px; position:relative;}
+  .timeline::before{
+    content:""; position:absolute; left:0; right:0; top:13px; height:1px; background:var(--line-light);
+  }
+  @media (max-width:720px){ .timeline::before{display:none;} }
+  .timeline-row{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  @media (max-width:900px){ .timeline-row{grid-template-columns:1fr 1fr; gap:32px;} }
+  @media (max-width:560px){ .timeline-row{grid-template-columns:1fr; gap:36px;} }
+  .t-item{position:relative; padding-top:36px;}
+  .t-item::before{
+    content:""; position:absolute; top:0; left:0; width:9px; height:9px; border-radius:50%;
+    background:var(--rose); border:2px solid var(--paper); box-shadow:0 0 0 1px var(--rose);
+  }
+  .t-item .t-eyebrow{font-family:var(--font-mono); font-size:11px; color:var(--rose-deep); letter-spacing:0.08em;}
+  .t-item h4{font-family:var(--font-display); font-size:19px; margin:12px 0 10px; font-weight:600;}
+  .t-item p{font-size:13.5px; opacity:0.78;}
+
+  .method-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:48px;}
+  .method-tags span{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.03em;
+    border:1px solid var(--line-light); padding:9px 16px; border-radius:100px; opacity:0.85;
+  }
+
+  .pattern-link{
+    display:inline-block; margin-top:14px; font-family:var(--font-mono); font-size:12.5px;
+    color:var(--rose-deep); border-bottom:1px solid var(--rose); padding-bottom:2px; text-decoration:none;
+  }
+  .text-link{color:var(--rose-deep); border-bottom:1px solid var(--rose); padding-bottom:1px; text-decoration:none;}
+
+  /* ---------- IMAGE LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(20,21,26,0.92); z-index:100;
+    display:flex; align-items:center; justify-content:center; padding:40px;
+    opacity:0; pointer-events:none; transition:opacity .25s ease;
+    overflow:auto; -webkit-overflow-scrolling:touch;
+  }
+  .lightbox.open{opacity:1; pointer-events:auto;}
+  .lightbox img{
+    max-width:min(900px,92vw); max-height:88vh; border-radius:4px;
+    transition:transform .3s ease; cursor:zoom-in; touch-action:pinch-zoom;
+  }
+  .lightbox img.zoomed{
+    max-width:none; max-height:none; width:min(1800px,220vw);
+    cursor:zoom-out; margin:auto;
+  }
+  .lightbox-close{
+    position:absolute; top:28px; right:32px; color:var(--text-light);
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
+    background:none; border:1px solid var(--line-dark); padding:10px 18px; border-radius:100px; cursor:pointer;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background:var(--text-dark);
+    color:var(--text-light);
+    text-align:center;
+    padding:140px 0 120px;
+  }
+  .cta .eyebrow{color:var(--ochre); justify-content:center;}
+  .cta h2{
+    font-size:clamp(30px,5vw,52px);
+    margin:26px auto 22px;
+    max-width:16ch;
+    line-height:1.5;
+  }
+  .cta p{opacity:0.68; max-width:46ch; margin:0 auto 44px; font-size:15px;}
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:14px;
+    background:var(--rose);
+    color:var(--text-light);
+    font-family:var(--font-mono);
+    font-size:14px; letter-spacing:0.05em;
+    padding:20px 40px;
+    border-radius:2px;
+    text-decoration:none;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .cta-btn:hover{background:var(--rose-deep); transform:translateY(-2px);}
+  .cta-sub{margin-top:26px; font-family:var(--font-mono); font-size:11.5px; opacity:0.4; letter-spacing:0.06em;}
+  .cta-logo{
+    display:block;
+    height:32px;
+    width:auto;
+    margin:26px auto 0;
+    opacity:0.85;
+    filter:brightness(0) invert(1);
+  }
+
+  footer{
+    background:var(--ink);
+    color:var(--text-light);
+    padding:40px 0;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    opacity:0.5;
+    letter-spacing:0.04em;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  /* scroll reveal */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+
+<body>
+
+<nav class="nav">
+  <span><img class="logo" src="logo.png" alt="美脳調律プログラム"></span>
+  <span>ヒト × AI × 知能</span>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="hero-split">
+    <div class="hero-ai">
+      <div class="hero-tag">
+        <span class="eyebrow">side_A — displaced</span>
+        <div class="hero-line">AIに、<br>仕事を奪われる人。</div>
+      </div>
+      <div class="hero-foot">// 命令文は書ける。でも「何を作らせたいか」が、自分でも分からない。</div>
+    </div>
+
+    <div class="hero-collab">
+      <span class="eyebrow">between — collaboration</span>
+      <div class="hero-line">AIとの、<br>協働。</div>
+      <div class="hero-collab-tags">AI彼氏／AI相談／AIスキルのある人</div>
+    </div>
+
+    <div class="hero-human">
+      <div class="hero-tag">
+        <span class="eyebrow">側 B — 使いこなす</span>
+        <div class="hero-line">AIに、<br>仕事をさせる人。</div>
+      </div>
+      <div class="hero-foot">再現させたい「感覚」と、伝えたい「感動」を、自分の言葉で持っている。</div>
+    </div>
+  </div>
+
+  <div class="hero-strap">
+    <b>差がつくのは、プロンプトの技術じゃない。</b>
+    <span>感覚と感動を、自分の中で分けて掴めるかどうか——それが、生き残る側の条件です。</span>
+  </div>
+</header>
+
+<!-- waveform: jagged (digital) -> smooth (organic) -->
+<svg class="waveform" viewBox="0 0 1200 64" preserveAspectRatio="none" style="background:var(--paper);">
+  <path d="M0,32 L40,8 L80,56 L120,14 L160,50 L200,20 L240,44 L280,26
+           C 340,10 400,54 460,32
+           C 540,4 620,60 700,32
+           C 780,8 860,52 940,32
+           C 1000,18 1060,42 1120,30
+           C 1160,24 1180,32 1200,32"
+    stroke="#C1546E" opacity="0.6"/>
+</svg>
+
+<!-- ===================== PROBLEM ===================== -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">01 — problem</span>
+      <h2>言葉にならない感覚が、<br>関係の解像度を落としている。</h2>
+    </div>
+
+    <div class="problem-grid">
+      <p class="problem-quote reveal">
+        自分が何にときめき、何にモヤつき、何に安心するのか。<br>
+        <em>言語化できていない感覚や感情</em>は、そのまま人間関係や共同作業の"ズレ"として現れます。
+        AIに向き合うときも同じです。<br>
+        指示は出せても、<em>何を再現させたいか</em>を掴めていなければ、出てくるのは「もっともらしい嘘」だけ。
+      </p>
+
+      <div class="problem-list reveal">
+        <div>
+          <span class="num">01</span>
+          <p>言いたいことがあるのに、うまく言葉にできず誤解される</p>
+        </div>
+        <div>
+          <span class="num">02</span>
+          <p>一緒にやりたい相手なのに、共同作業の温度感がすれ違う</p>
+        </div>
+        <div>
+          <span class="num">03</span>
+          <p>AIに何を求めているのか、自分でも説明できない</p>
+        </div>
+        <div>
+          <span class="num">04</span>
+          <p>「なんとなく違う」を放置したまま、関係も仕事も進めてしまう</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:64px; padding-top:40px; border-top:1px solid var(--line-light);">
+      <p style="font-size:14.5px; opacity:0.75; margin-bottom:20px; max-width:44ch;">その"ズレ"の正体は、美脳の秘訣から見ていくとわかります。</p>
+      <a href="guide.html" class="cta-btn">美脳の秘訣を見る →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 THESIS / 3 AXES ===================== -->
+<section class="dark pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">02 — thesis</span>
+      <h2 style="color:var(--text-light);">美脳調律プログラムは、<br>ヒトとAI、異なる「知能」を<br>繋ぐプロジェクトです。</h2>
+      <p>美脳調律プログラムは、自己実現と自己統合を調律していく取り組みの総称です。主力は、世代を越えてつながる「コミュニケーション改善」。AIによるクリエイティブは、人間の想像力を代替するものではなく、その"埋め"のための道具にすぎません。外部知能に何を委ね、何を委ねないか——境界を引く力こそが「知性」であり、これからのリテラシーです。外部知能に向き合うプロセスそのものが、人間の感情・感覚・コミュニケーションを扱う入口になります。</p>
+    </div>
+
+    <div class="axis-grid reveal">
+      <div class="axis-card">
+        <span class="eyebrow">axis 01</span>
+        <h3>知能 / Intelligence</h3>
+        <p>AIの知能は、膨大な情報処理と再現のスピード。人間の知能は、意味づけと選び取る力。同じ「知能」でも、種類がまったく違います。</p>
+      </div>
+      <div class="axis-card accent">
+        <span class="eyebrow">axis 02</span>
+        <h3>AI / Creative</h3>
+        <p>AIのアウトプットは、人間の想像力が届かない部分を埋める道具。再現するのも、再現させたい側も、主役はあくまで"人間"です。</p>
+      </div>
+      <div class="axis-card">
+        <span class="eyebrow">axis 03</span>
+        <h3>ヒト / Human</h3>
+        <p>感情・感覚・コミュニケーション。AIに向き合う過程で、結局試されるのはいつも人間側の解像度です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===================== 03 PRODUCTS / AGENTS ===================== -->
+<section class="products pad" style="padding-top:96px;">
+  <div class="wrap">
+    <div class="section-head reveal" style="color:var(--text-light);">
+      <span class="eyebrow" style="color:var(--cool);">03 — agents</span>
+      <h2 style="color:var(--text-light);">AIエージェントが<br>日常の「ガイド」になる。</h2>
+    </div>
+
+    <div class="product-grid reveal">
+      <div class="product-card hiiro">
+        <span class="p-eyebrow">Agent 01 ／ 人間心理・関係性</span>
+        <h3>緋色</h3>
+        <div class="p-sub">縁起とフラクタル AIエージェント ／ 対人コミュニケーション特化</div>
+        <p class="desc" style="font-family:var(--font-display); font-size:16px; font-weight:600; opacity:1; margin-bottom:14px;">「なぜ心理学を学んでも現実は変わらないのか」</p>
+        <p class="desc">人間関係の中で生まれるモヤつきや言葉にならない違和感を、一緒にほどいていくエージェント。</p>
+        <ul>
+          <li>関係の中の「ズレ」を言語化するサポート</li>
+          <li>縁起とフラクタルの視点を使った、日常のコミュニケーション改善</li>
+          <li>必要な人だけを、個別セッションへ橋渡し</li>
+        </ul>
+      </div>
+
+      <div class="product-card fura">
+        <span class="p-eyebrow">Agent 02 ／ Vtuber型</span>
+        <h3>フラ</h3>
+        <div class="p-sub">循環力 AIエージェント ／ 現実の見え方ガイド</div>
+        <p class="desc">人間関係に限らず、もっと広いテーマで「今、現実がどう見えているか」を一緒に確認する循環力ベースのAIエージェント。</p>
+        <ul>
+          <li>循環力という切り口で、視座のズレに気づく</li>
+          <li>特定の相手に閉じない、広い層向けの設計</li>
+          <li>日々の意思決定の「見え方」を整えるガイド役</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guide-note reveal">
+      <div class="box">
+        <span class="eyebrow" style="color:var(--rose-deep);">note</span>
+        <span>緋色・フラは、どちらも答えを断定するAIではありません。<br>人同士のやり取りでは可視化できないものを、AIエージェントだからこそできる対話で可視化する——あなた自身が気づくための「ガイド」であることを、設計上の役割としています。<br>「美脳調律プログラム」では、AI事業基盤をひとつ挟んだ「対人」コミュニケーションを扱っています。</span>
+      </div>
+    </div>
+
+    <div class="ref-grid reveal">
+      <div class="ref-card">
+        <div class="ref-card-head">
+          <span class="p-eyebrow">reference — live／Vtuber型</span>
+          <h4>フラ</h4>
+          <div class="ref-sub">循環力AIエージェント／実際の画面</div>
+        </div>
+        <div class="ref-frame">
+          <iframe src="https://nanbasuri891-maker.github.io/fra/" loading="lazy" title="フラ AIエージェント" allow="microphone"></iframe>
+        </div>
+        <div class="ref-card-foot">静かに寄り添う、常駐タイプのガイド。</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-card-head">
+          <span class="p-eyebrow">reference — motion／人間心理・関係性</span>
+          <h4>緋色</h4>
+          <div class="ref-sub">縁起とフラクタル AIエージェント／ビジュアル参考</div>
+        </div>
+        <div class="ref-frame">
+          <video id="hiiro-ref-video" src="hiiro-reference.mp4" playsinline poster=""></video>
+          <button class="ref-play-btn" onclick="const v=document.getElementById('hiiro-ref-video'); v.muted=false; v.play(); this.style.display='none';" aria-label="緋色の音声を再生">▶ 再生する</button>
+        </div>
+        <div class="ref-card-foot">対話の中で、表情ごと隣にいるようなガイド。<br><span style="opacity:0.7;">※音声が出ます。ご注意ください。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 INVESTMENT ===================== -->
+<section class="invest pad">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">"AIを介して"人と人が"コミュニケーションする世界"にシフトする</span>
+      <h2>AI時代の、マストスキル。</h2>
+      <p>恋愛にも、仕事にも、AIとの関わり方にも——共通して必要になるのは、同じ一つの力です。</p>
+    </div>
+    <p class="reveal">一つの領域で身につけたスキルが、恋愛にも、仕事にも、AIとの協働にも、そのまま効いていきます。</p>
+    <div class="invest-close reveal">一度の投資で、関わるすべての場面でリターンが返ってくる</div>
+  </div>
+</section>
+
+<!-- ===================== CTA (start here) ===================== -->
+<section class="cta">
+  <div class="wrap">
+    <span class="eyebrow">start here</span>
+    <h2>過去は関係ない。<br>「今ここ」から<br>変えていく。</h2>
+    <p>自分では気づけない感覚と感情の癖は、いつも人間関係のパターンに現れます。緋色・フラとの対話から、その輪郭を掴むところから始めましょう。</p>
+    <a href="https://line.me/ti/g2/FCnynAq6hme8SNGSsBAwwHYF3X4cY_frZT3g0g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" class="cta-btn" target="_blank" rel="noopener">無料のLINE登録はコチラ →</a>
+    <img class="cta-logo" src="logo.png" alt="美脳調律プログラム">
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
+    <span>美脳調律プログラム</span>
+    <span>ヒト × AI × 知能</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
