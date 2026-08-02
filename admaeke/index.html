@@ -272,13 +272,32 @@
   }
 
   /* ---------- 04 PLACEMENT ---------- */
-  .placement{background:var(--panel-2);}
+  .placement{position:relative;overflow:hidden;}
+  .placement-bg{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .placement-bg img{
+    width:100%;height:100%;
+    object-fit:cover;
+  }
+  .placement::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse 88% 95% at 50% 50%, rgba(247,244,238,.93) 0%, rgba(247,244,238,.62) 55%, rgba(247,244,238,.22) 100%);
+  }
+  .placement .wrap{position:relative;z-index:1;}
   .placement-grid{
     display:grid;
     grid-template-columns:0.85fr 1.25fr;
     gap:56px;
     align-items:center;
   }
+  .placement-text{max-width:640px;margin:0 auto;text-align:center;}
   .placement-text p{
     font-family:var(--serif);
     font-size:clamp(16px,2vw,18.5px);
@@ -563,23 +582,15 @@
 
 <!-- ===================== 04 PLACEMENT ===================== -->
 <section class="placement">
+  <div class="placement-bg"><img src="assets/img-gold-1.jpg" alt=""></div>
   <div class="wrap">
-    <div class="placement-grid">
-      <div class="placement-text">
-        <p>脳には「決めつけのスイッチ」がある。<br>自分では気づけない。</p>
-        <p>美脳は、AIの「外部知能」で検証し、<br>広告マーケティングで実装。</p>
-        <p class="dim">リードとコンタクトは<br>信頼を積み上げる「与信期間」。<br>恋愛でいえば「デート期間」。</p>
-        <p class="dim">つまり<br>「成約」「成婚」までには<br>一定期間の積み上げがかかる<br>暗黙知のルール。</p>
-        <p class="dim">AIが「確率」を最適化する動的構造の中に<br>「意志」が働く余力と余白を置く。</p>
-        <p>美脳が資産化していくのは、<br>その時々のトレンドをつかむ「直感力」。</p>
-      </div>
-      <div class="placement-diagram">
-        <div class="placement-gallery">
-          <img src="assets/img-gold-1.jpg" alt="">
-          <img src="assets/img-gold-2.jpg" alt="">
-          <img src="assets/img-gold-3.jpg" alt="">
-        </div>
-      </div>
+    <div class="placement-text">
+      <p>脳には「決めつけのスイッチ」がある。<br>自分では気づけない。</p>
+      <p>美脳は、AIの「外部知能」で検証し、<br>広告マーケティングで実装。</p>
+      <p class="dim">リードとコンタクトは<br>信頼を積み上げる「与信期間」。<br>恋愛でいえば「デート期間」。</p>
+      <p class="dim">つまり<br>「成約」「成婚」までには<br>一定期間の積み上げがかかる<br>暗黙知のルール。</p>
+      <p class="dim">AIが「確率」を最適化する動的構造の中に<br>「意志」が働く余力と余白を置く。</p>
+      <p>美脳が資産化していくのは、<br>その時々のトレンドをつかむ「直感力」。</p>
     </div>
   </div>
 </section>
@@ -596,9 +607,8 @@
     <div class="gap"></div>
     <p class="dim">才能があっても、<br>チームワークを乱すコストの方が大きい。</p>
     <div class="gap"></div>
-    <p class="dim">知能やスキル以上に</p>
-    <p class="dim">仕上がりのプロセスをチーム展開できる</p>
-    <p class="dim">定性・定量化できる感覚を持っている人間の方が</p>
+    <p class="dim">感情や共感を</p>
+    <p class="dim">定性・定量化できる感覚を持っている人間が</p>
     <div class="gap"></div>
     <p>ツールやプラットフォームが変わっても<br>敗けない勝ち方ができる。</p>
     <div class="gap"></div>
@@ -611,13 +621,13 @@
   <div class="wrap">
     <p class="cta-lead">2つの入口がある。</p>
     <div class="cta-grid">
-      <a class="cta-card a" href="https://sites.google.com/view/enfra" target="_blank" rel="noopener">
+      <a class="cta-card a" href="https://nanbasuri891-maker.github.io/enfra/" target="_blank" rel="noopener">
         <div class="cta-media"><img src="assets/img-gold-1.jpg" alt=""></div>
         <span class="k">縁起とフラクタル</span>
         <h3>関係性のパターンに<br>フォーカスする</h3>
         <span class="go">縁起とフラクタルへ <span class="arrow">→</span></span>
       </a>
-      <a class="cta-card b" href="https://nanbasuri891-maker.github.io/binou/guide.html" target="_blank" rel="noopener">
+      <a class="cta-card b" href="https://nanbasuri891-maker.github.io/bino/guide.html" target="_blank" rel="noopener">
         <div class="cta-media"><img src="assets/img-blue.jpg" alt=""></div>
         <span class="k">美脳調律プログラム</span>
         <h3>AI時代の<br>マインドセットを再学習する</h3>
