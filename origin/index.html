@@ -399,6 +399,38 @@ footer .mark { color:var(--ink-soft); letter-spacing:0.3em; }
 }
 .audio-space-btn:hover { background:rgba(255,209,102,0.08); }
 .audio-space-btn .icon { font-size:1rem; }
+.audio-list {
+  display:flex;
+  flex-direction:column;
+  gap:0.8em;
+}
+.audio-item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1em;
+  padding:0.9em 1.2em;
+  border:1px solid var(--panel-line);
+  border-radius:6px;
+  background:var(--void-2);
+  text-align:left;
+  cursor:pointer;
+  color:var(--ink);
+  font-family:var(--sans);
+}
+.audio-item:hover { border-color:var(--gold); }
+.audio-item.playing { border-color:var(--gold); background:rgba(255,209,102,0.06); }
+.audio-item-title { font-size:0.92rem; }
+.audio-item-meta {
+  display:flex;
+  align-items:center;
+  gap:0.6em;
+  flex-shrink:0;
+  font-family:var(--mono);
+  font-size:0.78rem;
+  color:var(--gold);
+}
+.audio-item-icon { font-size:0.85rem; }
 </style>
 </head>
 <body>
@@ -510,10 +542,21 @@ footer .mark { color:var(--ink-soft); letter-spacing:0.3em; }
 
 <div class="audio-space reveal">
   <span class="audio-space-label">LISTEN</span>
-  <p class="audio-space-text">音声で聴く。</p>
-  <button class="audio-space-btn" id="listenBtn" type="button" aria-label="音声で読み上げる">
-    <span class="icon" id="listenIcon">▶</span> <span id="listenLabel">読み上げる</span>
-  </button>
+  <p class="audio-space-text">1分以内で聴ける、3つの話。</p>
+  <div class="audio-list">
+    <button class="audio-item" data-tracks="audio/01.mp3,audio/02.mp3" type="button">
+      <span class="audio-item-title">現場で起きていること</span>
+      <span class="audio-item-meta"><span class="audio-item-icon">▶</span>約1分</span>
+    </button>
+    <button class="audio-item" data-tracks="audio/03.mp3,audio/04.mp3" type="button">
+      <span class="audio-item-title">感情的から、攻撃的へ</span>
+      <span class="audio-item-meta"><span class="audio-item-icon">▶</span>約1分</span>
+    </button>
+    <button class="audio-item" data-tracks="audio/05.mp3,audio/06.mp3" type="button">
+      <span class="audio-item-title">多様化する正解と、受け取りの技術</span>
+      <span class="audio-item-meta"><span class="audio-item-icon">▶</span>約1分</span>
+    </button>
+  </div>
 </div>
 
 <section class="closing reveal">
@@ -537,61 +580,59 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal, .divider-wrap').forEach(el => observer.observe(el));
 
-// --- 音声ナレーション 連続再生プレーヤー ---
-const playlist = [
-  'audio/01.mp3',
-  'audio/02.mp3',
-  'audio/03.mp3',
-  'audio/04.mp3',
-  'audio/05.mp3',
-  'audio/06.mp3'
-];
-
+// --- 音声ナレーション：3項目リストプレーヤー ---
 (function () {
-  const btn = document.getElementById('listenBtn');
-  const icon = document.getElementById('listenIcon');
-  const label = document.getElementById('listenLabel');
-  if (!btn) return;
+  const items = document.querySelectorAll('.audio-item');
+  if (!items.length) return;
 
   const audio = new Audio();
-  let trackIndex = 0;
-  let isPlaying = false;
+  let activeItem = null;
+  let queue = [];
+  let queueIndex = 0;
 
-  function playTrack(i) {
-    trackIndex = i;
-    audio.src = playlist[trackIndex];
+  function resetItem(el) {
+    el.classList.remove('playing');
+    el.querySelector('.audio-item-icon').textContent = '▶';
+  }
+
+  function playQueue() {
+    audio.src = queue[queueIndex];
     audio.play();
   }
 
   audio.addEventListener('ended', () => {
-    if (trackIndex < playlist.length - 1) {
-      playTrack(trackIndex + 1);
-    } else {
-      isPlaying = false;
-      trackIndex = 0;
-      icon.textContent = '▶';
-      label.textContent = '読み上げる';
+    if (queueIndex < queue.length - 1) {
+      queueIndex++;
+      playQueue();
+    } else if (activeItem) {
+      resetItem(activeItem);
+      activeItem = null;
     }
   });
 
-  btn.addEventListener('click', () => {
-    if (isPlaying) {
-      audio.pause();
-      isPlaying = false;
-      icon.textContent = '▶';
-      label.textContent = '読み上げる';
-      return;
-    }
-    isPlaying = true;
-    icon.textContent = '❚❚';
-    label.textContent = '停止する';
-    if (!audio.src) {
-      playTrack(0);
-    } else {
-      audio.play();
-    }
+  items.forEach(el => {
+    el.addEventListener('click', () => {
+      const isThisPlaying = el.classList.contains('playing');
+
+      if (activeItem && activeItem !== el) resetItem(activeItem);
+
+      if (isThisPlaying) {
+        audio.pause();
+        resetItem(el);
+        activeItem = null;
+        return;
+      }
+
+      queue = el.dataset.tracks.split(',');
+      queueIndex = 0;
+      activeItem = el;
+      el.classList.add('playing');
+      el.querySelector('.audio-item-icon').textContent = '❚❚';
+      playQueue();
+    });
   });
 })();
+
 
 
 </script>
