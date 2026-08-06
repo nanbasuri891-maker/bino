@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美脳の成り立ち｜カナエ×ヒロユキ、ふたりが調律をはじめた理由</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #07070d;
+  --void-2: #0b0c16;
+  --panel: #12131f;
+  --panel-line: rgba(159,169,214,0.18);
+  --cyan: #4fd8ff;
+  --magenta: #ff4fb0;
+  --gold: #ffd166;
+  --ink: #eef1fa;
+  --ink-soft: #c7cbe0;
+  --ink-muted: #8b93b8;
+  --serif: 'Shippori Mincho', serif;
+  --sans: 'Zen Kaku Gothic New', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:90%; }
+body {
+  background:var(--void);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.9;
+  -webkit-font-smoothing:antialiased;
+}
+a { color:var(--cyan); }
+
+/* ---------- Hero ---------- */
+.hero-bg {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  background:#000;
+}
+.hero {
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:flex-end;
+}
+.hero-img {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:30% 30%;
+  opacity:0.6;
+  filter:brightness(1.38) saturate(1.08) contrast(1.02);
+}
+.hero-scrim {
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(7,7,13,0.05) 0%, rgba(7,7,13,0.22) 45%, rgba(7,7,13,0.92) 92%, #07070d 100%),
+    linear-gradient(90deg, rgba(7,7,13,0.42) 0%, rgba(7,7,13,0.02) 45%);
+}
+.hero-particles {
+  position:absolute; inset:0; pointer-events:none;
+}
+.hero-particles span {
+  position:absolute;
+  width:3px; height:3px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px 2px var(--cyan);
+  opacity:0.7;
+  animation:drift 9s ease-in-out infinite;
+}
+@keyframes drift {
+  0%,100% { transform:translateY(0px); opacity:0.25; }
+  50% { transform:translateY(-18px); opacity:0.85; }
+}
+.hero-content {
+  position:relative;
+  z-index:2;
+  width:100%;
+  padding:0 6vw 3vh;
+  max-width:1180px;
+  margin:0 auto;
+}
+.hero-content::before {
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-2vh;
+  top:-8vh;
+  background:linear-gradient(180deg, rgba(7,7,13,0) 0%, rgba(7,7,13,0.5) 28%, rgba(7,7,13,0.88) 100%);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  z-index:-1;
+  pointer-events:none;
+}
+.float-el {
+  display:inline-block;
+  animation:floatText 7s ease-in-out infinite;
+}
+h1.float-el { display:block; }
+p.float-el { display:block; }
+@keyframes floatText {
+  0%,100% { transform:translateY(0px); }
+  50% { transform:translateY(-10px); }
+}
+.page-body {
+  position:relative;
+  background:var(--void);
+}
+.eyebrow {
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+}
+.eyebrow::before {
+  content:"";
+  width:26px; height:1px;
+  background:var(--cyan);
+}
+.hero-title {
+  font-family:var(--serif);
+  font-weight:800;
+  font-size:clamp(2.6rem, 6vw, 5.2rem);
+  line-height:1.25;
+  letter-spacing:0.02em;
+  margin-bottom:2.2rem;
+  max-width:14ch;
+}
+.hero-lead {
+  font-family:var(--serif);
+  font-size:clamp(1rem, 1.5vw, 1.2rem);
+  color:var(--ink-soft);
+  max-width:560px;
+  line-height:2;
+  margin-bottom:1.4rem;
+}
+.hero-punch {
+  font-family:var(--mono);
+  font-size:clamp(1rem, 1.6vw, 1.25rem);
+  letter-spacing:0.06em;
+  color:var(--gold);
+  border-left:2px solid var(--gold);
+  padding-left:16px;
+  margin-top:1.6rem;
+}
+.scroll-cue {
+  position:absolute;
+  bottom:28px; left:6vw;
+  z-index:2;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.25em;
+  color:var(--ink-muted);
+  display:flex; align-items:center; gap:10px;
+}
+.scroll-cue .line {
+  width:1px; height:34px;
+  background:linear-gradient(180deg, var(--cyan), transparent);
+  animation:scrolldrop 2.4s ease-in-out infinite;
+}
+@keyframes scrolldrop {
+  0% { transform:scaleY(0); transform-origin:top; }
+  50% { transform:scaleY(1); transform-origin:top; }
+  50.1% { transform-origin:bottom; }
+  100% { transform:scaleY(0); transform-origin:bottom; }
+}
+
+/* ---------- Second hook (below hero) ---------- */
+.hook {
+  max-width:640px;
+  margin:0 auto;
+  padding:9vh 6vw 6vh;
+}
+.hook p {
+  font-family:var(--serif);
+  font-size:1.08rem;
+  color:var(--ink-soft);
+  line-height:2.05;
+}
+
+/* ---------- Sections ---------- */
+.chapter {
+  max-width:680px;
+  margin:0 auto;
+  padding:4vh 6vw 8vh;
+}
+.chapter-head {
+  margin-bottom:3.2rem;
+}
+.chapter-eyebrow {
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  display:block;
+  margin-bottom:0.9rem;
+}
+.chapter-title {
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(1.5rem, 3vw, 2.1rem);
+  line-height:1.6;
+}
+.chapter p {
+  font-family:var(--serif);
+  font-size:1.03rem;
+  color:var(--ink-soft);
+  line-height:2.05;
+  margin-bottom:1.55rem;
+  letter-spacing:0.01em;
+}
+.chapter p:first-of-type::first-letter {
+  font-size:2.6em;
+  float:left;
+  line-height:0.85;
+  padding-right:0.1em;
+  padding-top:0.06em;
+  color:var(--cyan);
+  font-weight:600;
+}
+
+.pivot {
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(1.15rem, 2.4vw, 1.5rem);
+  line-height:1.85;
+  color:var(--ink);
+  border-top:1px solid var(--panel-line);
+  border-bottom:1px solid var(--panel-line);
+  padding:2.2rem 0;
+  margin:2.6rem 0;
+}
+.pivot.gold { color:var(--gold); }
+
+/* data panels */
+.panel {
+  background:var(--panel);
+  border:1px solid var(--panel-line);
+  border-left-width:3px;
+  border-radius:2px;
+  padding:1.6rem 1.7rem;
+  margin:2.4rem 0;
+}
+.panel-cyan { border-left-color:var(--cyan); }
+.panel-magenta { border-left-color:var(--magenta); }
+.panel-gold { border-left-color:var(--gold); }
+.panel-label {
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  color:var(--ink-muted);
+  margin-bottom:0.9rem;
+}
+.panel p {
+  font-family:var(--sans);
+  font-size:0.94rem;
+  color:var(--ink-soft);
+  line-height:1.9;
+  margin:0;
+}
+
+/* circuit divider */
+.divider-wrap {
+  max-width:1000px;
+  margin:2vh auto;
+  padding:0 6vw;
+  opacity:0.35;
+}
+.circuit { width:100%; height:64px; display:block; }
+.circuit-path {
+  stroke-dasharray:1800;
+  stroke-dashoffset:1800;
+  transition:stroke-dashoffset 1.8s ease;
+}
+.divider-wrap.in-view .circuit-path { stroke-dashoffset:0; }
+.node { fill:var(--gold); opacity:0; transition:opacity 0.6s ease 1.2s; }
+.divider-wrap.in-view .node { opacity:1; }
+
+/* reveal on scroll */
+.reveal {
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.in-view { opacity:1; transform:translateY(0); }
+
+/* closing manifesto */
+.closing {
+  position:relative;
+  padding:14vh 6vw 12vh;
+  text-align:center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,79,176,0.09), transparent 60%),
+    radial-gradient(ellipse at 20% 100%, rgba(79,216,255,0.08), transparent 55%),
+    var(--void-2);
+  border-top:1px solid var(--panel-line);
+}
+.closing-eyebrow {
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.3em;
+  color:var(--gold);
+  margin-bottom:1.6rem;
+  display:block;
+}
+.closing p.line1 {
+  font-family:var(--serif);
+  font-size:clamp(1.1rem, 2.3vw, 1.4rem);
+  color:var(--ink-soft);
+  max-width:520px;
+  margin:0 auto 2.2rem;
+  line-height:1.95;
+}
+.closing p.line2 {
+  font-family:var(--serif);
+  font-weight:800;
+  font-size:clamp(1.5rem, 3.6vw, 2.3rem);
+  letter-spacing:0.03em;
+  line-height:1.7;
+  background:linear-gradient(90deg, var(--cyan), var(--gold) 55%, var(--magenta));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  max-width:640px;
+  margin:0 auto;
+}
+
+footer {
+  padding:5vh 6vw 6vh;
+  text-align:center;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.22em;
+  color:var(--ink-muted);
+}
+footer .mark { color:var(--ink-soft); letter-spacing:0.3em; }
+
+@media (max-width:560px){
+  .hero-content { padding:0 7vw 7vh; }
+  .hero-title { max-width:none; }
+  .chapter, .hook { padding-left:7vw; padding-right:7vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation:none !important; transition:none !important; }
+  .reveal { opacity:1; transform:none; }
+  .circuit-path { stroke-dashoffset:0; }
+  .node { opacity:1; }
+}.audio-space {
+  max-width:640px;
+  margin:0 auto 8vh;
+  padding:5vw 6vw;
+  border:1px solid var(--panel-line);
+  border-radius:4px;
+  background:var(--panel);
+  text-align:center;
+}
+.audio-space-label {
+  display:block;
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  color:var(--gold);
+  margin-bottom:1.2em;
+}
+.audio-space-text {
+  color:var(--ink-soft);
+  font-size:0.95rem;
+  margin-bottom:1.6em;
+}
+.audio-space-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:0.6em;
+  padding:0.8em 1.8em;
+  border:1px solid var(--gold);
+  border-radius:999px;
+  color:var(--gold);
+  font-family:var(--sans);
+  font-size:0.9rem;
+  background:transparent;
+  cursor:pointer;
+  transition:background 0.2s ease;
+}
+.audio-space-btn:hover { background:rgba(255,209,102,0.08); }
+.audio-space-btn .icon { font-size:1rem; }
+</style>
+</head>
+<body>
+
+<div class="hero-bg">
+  <img class="hero-img" src="images/hero.jpg" alt="ビノー — 回路の光を纏う横顔">
+  <div class="hero-scrim"></div>
+  <div class="hero-particles">
+    <span style="left:12%; top:20%; animation-delay:0s;"></span>
+    <span style="left:34%; top:12%; animation-delay:1.2s;"></span>
+    <span style="left:58%; top:28%; animation-delay:2.4s;"></span>
+    <span style="left:71%; top:16%; animation-delay:0.6s;"></span>
+    <span style="left:83%; top:34%; animation-delay:3s;"></span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow float-el" style="animation-delay:0s;">BINOH — ORIGIN</span>
+    <h1 class="hero-title float-el" style="animation-delay:0.3s;">美脳の起源</h1>
+    <p class="hero-lead float-el" style="animation-delay:0.6s;">「AIに訊けばわかる。」<br>その返事にいら立ちを覚える。<br>誰かに訊けば「正解」がもらえる。<br>その常識が終わる。<br>当たり前に相手からアクションしてもらえる世界がなくなる。</p>
+    <p class="hero-punch float-el" style="animation-delay:0.9s;">世界のルールが、もう変わり始めている。</p>
+  </div>
+  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+</section>
+
+<main class="page-body">
+
+<div class="divider-wrap reveal"><svg class="circuit" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="var(--cyan)"/>
+      <stop offset="50%" stop-color="var(--magenta)"/>
+      <stop offset="100%" stop-color="var(--gold)"/>
+    </linearGradient>
+  </defs>
+  <path class="circuit-path" d="M0,60 L120,60 L160,20 L220,20 L260,60 L340,60 L380,100 L460,100 L500,60 L620,60 L660,20 L740,20 L780,60 L900,60 L940,100 L1020,100 L1060,60 L1200,60" fill="none" stroke="url(#circuitGrad)" stroke-width="2"/>
+  <circle class="node" cx="160" cy="20" r="4"/>
+  <circle class="node" cx="380" cy="100" r="4"/>
+  <circle class="node" cx="660" cy="20" r="4"/>
+  <circle class="node" cx="940" cy="100" r="4"/>
+  <circle class="node" cx="1060" cy="60" r="4"/>
+</svg></div>
+
+<section class="chapter">
+  <div class="chapter-head reveal">
+    <span class="chapter-eyebrow">Chapter 0 — Story</span>
+    <h2 class="chapter-title">美脳のはじまりは<br>アフターコロナの<br>世界のシフトチェンジ</h2>
+  </div>
+  <div class="reveal">
+<p>AIが、あらゆる答えを一瞬で並べてくれる時代に<br>「正解を選べる力」だけではもう足りない。</p>
+<p>——多くの大人が非対面では感情的になって肝心の「やること」にたどり着けない。「感情が行動を止めてしまう」構造。</p>
+<p>ふたつの視点が重なったとき、確信に変わった。</p>
+<p>これは有望な若年層からも声が多く上がる。「ただやる」ができない大人がいる。大人がチームを組むと先にチームが崩壊する。「始まる前に終わっている」の正体。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head reveal">
+    <span class="chapter-eyebrow">Chapter I — Mechanism</span>
+    <h2 class="chapter-title">なぜ「大人」になった人ほど<br>リスクを抱えるのか</h2>
+  </div>
+  <div class="reveal">
+<div class="panel panel-cyan">
+<span class="panel-label">SOURCE — 文部科学省・科研費 学術変革領域研究「ナラティブ意識学」(2024年度〜)</span>
+<p>文部科学省が支援する学術研究のひとつに、「ナラティブ意識学」と呼ばれる領域がある。2024年度から科研費・学術変革領域研究として動き出したこの研究は、人が語る言葉——ナラティブ——を通して、意識という主観的な体験を、現象学・自然言語処理・脳科学という異なる角度から解き明かそうとする試み。</p>
+</div>
+
+<p>「語られた言葉」と「内容」は、必ずしも一致しないという事実。 言葉は透明な器ではなく、そこには必ず変換のプロセスが挟まっている。</p>
+<p>この「ズレ」がなぜ生まれるのか。その背景には、世代が積み重ねてきた「学力観」がある。</p>
+<p>ある一定層は、AかBかのボタンひとつで正解・不正解が決まる学力の中で育ってきた。 明確な正解があり、「なんとなく」の感覚だけでも、そこそこのスコアリングができてしまう世代。</p>
+<p>心理学では、記憶の想起を「再認」と「再生」という、はっきり異なる2つの様式に分けている。 再認は、提示された選択肢の中に見覚えのあるものを見つける方式。選択肢そのものが強力な手がかりになるため、「なじみ感」があれば正解にたどり着ける。 再生は、手がかりなしに情報を自力で探索し、組み立て直す方式。長期記憶の中から候補を探し出し、それが正しいかどうかを照合するという、2段階の作業を要する。試験でいえば、選択式は再認、記述式は再生にあたり、再生の方が難しいことは繰り返し確認されている。</p>
+<p>「AかBかのボタンひとつで決まる学力」は、再認。 目の前に置かれた選択肢という手がかりに、なじみ感で反応。ゼロから文脈を探索し、組み立てる力——再生とは、そもそも測っているものが違う。</p>
+<p>新しい提案、新しい人間関係、新しい状況——まだ答えのない場面に再認的な処理を使ってしまうと目の前にあるものをゼロからではなく、過去のなじみのラベルと照合するだけで判定を終えてしまう。「始まる前に終わる」正体もここにある。</p>
+<p>そこに生成AIが介在した瞬間、前提が崩れる。 東京大学のある識者は、生成AIが過去のデータをもとにあらゆる答えを最大公約数として返してくることが、私たちの世界をかえって画一化させかねないと警鐘を鳴らしている。 物事には必ずひとつの正解があるとする「正解主義」——日本の教育が長く抱えてきたその構造は、生成AIとの相性が良すぎる。正解のない問いに向き合い、納得できる解を自分たちでつくっていく経験が、ますます痩せていく。</p>
+<p>問われているのは、選択肢の数ではなく、情報そのものの「密度」。 この密度の違いが、行動の量と質を決めている。</p>
+<p>ここに盲点がある。 「正解を選べる」人ほど、実は「正解にならない情報」がどれほどの密度で存在しているかを知らない。</p>
+<div class="panel panel-gold">
+<span class="panel-label">SOURCE — Luchins, A. S. (1942) 水瓶問題実験／アインシュテルング効果</span>
+<p>1940年代、心理学者ルーチンスは「水瓶問題」という実験を行った。3段階の手順で解ける問題を何問か続けて解かせたあと、実はもっと単純な2段階でも解ける問題を出す。</p>
+<p>多くの被験者は成功パターンに引きずられ、目の前のもっと簡単な解き方に気づけなくなる。「アインシュテルング効果」——成功した先行経験が「構え」をつくり、その構えの外にある可能性を見えなくしてしまう。チェスの熟練者が定石にとらわれ、盤面上のより良い一手を見落とすのと同じ構造だ。</p>
+</div>
+
+<p>正解を積み重ねてきた成功体験があるほど、その外側に広がる情報量に気づく機会がなかった。構造上、必然的に生まれる盲点。</p>
+<div class="panel panel-magenta">
+<span class="panel-label">SOURCE — Ophir, Nass &amp; Wagner (2009), Stanford University</span>
+<p>同じ構造は、集中力の研究にも見つかっている。 スタンフォード大学のOphir・Nass・Wagnerの3氏が2009年に発表した研究では、日常的に複数のメディアを同時利用する人ほど、無関係な情報を締め出す力が弱いことが示された。切り替えが得意なのではない。何も締め出せないだけだった。しかもSATの点数も、記憶容量も、性格特性も、両群の間に差はなかった。差がついたのは、何を視界に入れておくかという設定だけだった。</p>
+</div>
+
+<p>フィルタの差。——正解を選べる力の正体と、驚くほど同じだ。</p>
+<p>さらに男性と女性では、この「受け取り」に、少し「技術」が必要だ。これはジェンダーではなく「脳」の持つ「推進力」に当たる。これが「恋愛」と側面が似ている。</p>
+<p>旧来の学力観で「正解を選べる」成功体験を積んできた大人ほど選べていない。選んでいるつもりで、目の前の情報を何も締め出せていないだけ。</p>
+<p>これから問われるのは、選ぶ力ではなく、手がかりなしに自分で正解をはじき出す力——「再生」の力の方だ。</p>
+<p>行動科学の分野でも、繰り返し確認されてきたパターン。健康心理学では、「わかっているのにできない」状態を「意図行動ギャップ」と呼ぶ。〜しようと思う(意図)から〜する(行動)へは、実はそのままつながらない。意図によって行動が説明できるのは、平均するとおよそ半分程度にすぎないとされている。</p>
+<p>一方、実行に踏み出せない状態にも名前がある。「分析麻痺症候群」——情報や選択肢が増えるほど、それを吟味すること自体に時間とエネルギーが奪われ、「実行」というステップに進めなくなる。分析に費やすコストが、得られるメリットを上回ってしまう。</p>
+<p>始まる前に終わらせてしまうのも、始めようとして動けなくなるのも、根はひとつ。実行の座が、静かに奪ってしまっている状態だ。</p>
+<p>現代はすでに「マジョリティが正義」の時代ではない。 「多様性」そのものが「多様化」、正解の基準はひとつではなく、無数に枝分かれしている。「自分の『正解』が『正解』として機能しない」。 これが、自己効力感が薄まっていく感覚の正体。</p>
+<p>問題は、そこで感情的になり、「敵」を作ってしまう——ここに本当のリスクがある。 社会心理学が明らかにしてきた「スケープゴーティング」。複雑な背景を検証するより、「あの人が悪い」と決めてしまったほうが、集団や個人の不安は一時的に軽くなる。欲求不満が、特定の誰かへの攻撃に転化される。人間の心が持つ既定の防衛反応だ。</p>
+<p>このリスクを最も抱えやすいのは、実は「大人」になった人の方。 かつての学力観の中で「正解を選べる」成功体験を積んできた人ほど、情報密度の変化に気づきにくい。脳の「決めつけ」スイッチが、承認欲求の埋め合わせとして「敵」を見つけ、自己効力感の低下を埋め合わせようとする。</p>
+<p>偏りは、誰にでも起きる。 問題は気づかないまま、偏り続けズレたまま固まると気づいた時に大きいままズレが出来上がっている。</p>
+<p>18歳、25歳、35歳、40歳——美脳は、「大人になること」そのものを再定義している。これまでの節目とは違う新しいエポックメイキングは「未来への招待状」だ。</p>
+  </div>
+</section>
+
+<div class="audio-space reveal">
+  <span class="audio-space-label">LISTEN</span>
+  <p class="audio-space-text">このページを、音声で聴く。</p>
+  <button class="audio-space-btn" type="button" aria-label="音声で読み上げる">
+    <span class="icon">▶</span> 読み上げる
+  </button>
+</div>
+
+<section class="closing reveal">
+  <span class="closing-eyebrow">BINOH TUNING PROGRAM</span>
+  <p class="line2">未来からの再起動の招待状。</p>
+</section>
+
+<footer>
+  <span class="mark">美脳 / BINOH</span>
+</footer>
+</main>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.01 });
+
+document.querySelectorAll('.reveal, .divider-wrap').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
