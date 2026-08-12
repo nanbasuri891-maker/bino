@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正解は、引き寄せるもの。| 縁起とフラクタル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#1C1F24;
+    --graphite-2:#262A31;
+    --frost:#EEF1F4;
+    --frost-2:#DCE1E6;
+    --parchment:#F6F1E7;
+    --parchment-2:#EFE7D6;
+    --thread:#B8935A;
+    --thread-dim:#7C6440;
+    --ash:#6B7078;
+    --ash-light:#9DA3AC;
+    --ink-on-light:#20242B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    background:var(--graphite);
+    color:var(--frost);
+    line-height:1.9;
+    overflow-x:hidden;
+  }
+  .serif{font-family:'Shippori Mincho', serif;}
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- progress dial ---------- */
+  .dial{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    justify-content:center;
+    gap:clamp(18px,4vw,40px);
+    padding:18px 20px;
+    background:rgba(28,31,36,0.72);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    transition:background 0.6s ease;
+  }
+  .dial.on-light{background:rgba(246,241,231,0.78);}
+  .dial-item{
+    font-size:12px;
+    letter-spacing:0.35em;
+    color:var(--ash-light);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:color 0.4s ease;
+  }
+  .dial.on-light .dial-item{color:var(--ash);}
+  .dial-item .char{
+    font-family:'Shippori Mincho', serif;
+    font-size:15px;
+    color:var(--ash-light);
+    transition:color 0.4s ease, transform 0.4s ease;
+  }
+  .dial.on-light .dial-item .char{color:var(--ash);}
+  .dial-item.active .char{
+    color:var(--thread);
+    transform:scale(1.25);
+  }
+  .dial-item.active{color:var(--thread);}
+  .dial-item .label{display:none;}
+  @media(min-width:640px){
+    .dial-item .label{display:inline;font-size:11px;}
+  }
+
+  section{
+    position:relative;
+    padding:min(18vh,150px) 24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .wrap{width:100%;max-width:760px;margin:0 auto;}
+
+  /* ---------- 引 hero ---------- */
+  #hero{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(184,147,90,0.10), transparent 55%),
+      var(--graphite);
+  }
+  #hero .eyebrow{
+    font-size:12px;
+    letter-spacing:0.4em;
+    color:var(--thread);
+    margin-bottom:28px;
+    text-align:center;
+  }
+  #hero h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    font-size:clamp(30px,5.4vw,54px);
+    line-height:1.65;
+    text-align:center;
+    letter-spacing:0.02em;
+  }
+  #hero h1 .soft{color:var(--ash-light);font-weight:400;}
+  #hero h1 .strong{color:#FBF8F1;}
+  #hero .sub{
+    margin-top:36px;
+    text-align:center;
+    font-size:15px;
+    color:var(--ash-light);
+    letter-spacing:0.05em;
+  }
+  .scroll-cue{
+    position:absolute;
+    bottom:48px; left:50%;
+    transform:translateX(-50%);
+    width:1px; height:64px;
+    background:linear-gradient(to bottom, transparent, var(--thread-dim));
+  }
+  .scroll-cue::after{
+    content:"";
+    position:absolute;
+    top:0; left:50%;
+    width:5px;height:5px;
+    margin-left:-2px;
+    border-radius:50%;
+    background:var(--thread);
+    animation:cue 2.6s ease-in-out infinite;
+  }
+  @keyframes cue{
+    0%{top:0;opacity:0;}
+    20%{opacity:1;}
+    90%{opacity:1;}
+    100%{top:60px;opacity:0;}
+  }
+
+  /* ---------- field canvas (惑→磨→結の背骨) ---------- */
+  #field-zone{
+    position:relative;
+    background:var(--frost);
+    color:var(--ink-on-light);
+    height:300vh;
+  }
+  .field-sticky{
+    position:sticky;
+    top:0;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+  }
+  #dotcanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+  }
+  .field-copy{
+    position:absolute;
+    inset:0;
+    z-index:5;
+  }
+  .field-block{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    opacity:0;
+    transition:opacity 0.6s ease;
+    pointer-events:none;
+  }
+  .field-block.active{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .field-block .wrap{
+    max-width:640px;
+  }
+  .field-eyebrow{
+    font-size:12px;
+    letter-spacing:0.4em;
+    color:var(--ash);
+    margin-bottom:22px;
+  }
+  .field-block h2{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    font-size:clamp(20px,3vw,32px);
+    line-height:1.85;
+    color:var(--ink-on-light);
+  }
+  .field-block h2 em{
+    font-style:normal;
+    color:var(--thread-dim);
+    border-bottom:1px solid var(--thread-dim);
+    padding-bottom:2px;
+  }
+  .field-block p.note{
+    margin-top:20px;
+    font-size:13.5px;
+    color:var(--ash);
+    line-height:1.95;
+  }
+  .fact-row{
+    display:flex;
+    gap:0;
+    margin-top:26px;
+    border-top:1px solid rgba(107,112,120,0.28);
+  }
+  .fact-cell{
+    flex:1;
+    padding:14px 14px 0;
+    border-right:1px solid rgba(107,112,120,0.28);
+  }
+  .fact-cell:last-child{border-right:none;}
+  .fact-cell .num{
+    font-family:'Shippori Mincho', serif;
+    font-size:20px;
+    color:var(--ink-on-light);
+  }
+  .fact-cell .cap{
+    margin-top:6px;
+    font-size:11px;
+    color:var(--ash);
+    letter-spacing:0.02em;
+  }
+  .field-eyebrow{margin-bottom:16px;}
+  @media(max-height:720px){
+    .field-block h2{font-size:clamp(17px,2.6vw,26px);line-height:1.7;}
+    .field-block p.note{font-size:12.5px;margin-top:14px;line-height:1.8;}
+    .fact-row{margin-top:16px;}
+  }
+
+  /* ---------- 結 共感の再定義 ---------- */
+  #reframe{
+    background:var(--graphite-2);
+    color:var(--frost);
+    padding:min(20vh,170px) 24px;
+  }
+  #reframe .field-eyebrow{color:var(--ash-light);}
+  #reframe .wrap{max-width:680px;text-align:center;}
+  #reframe h2{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    font-size:clamp(24px,3.8vw,38px);
+    line-height:2;
+  }
+  #reframe .split{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:20px;
+    align-items:center;
+    text-align:left;
+  }
+  #reframe .split .arrow{
+    font-family:'Shippori Mincho', serif;
+    color:var(--thread);
+    font-size:22px;
+  }
+  #reframe .split .old, #reframe .split .new{
+    font-size:14px;
+    line-height:2;
+  }
+  #reframe .split .tag{
+    display:block;
+    font-size:11px;
+    letter-spacing:0.3em;
+    margin-bottom:10px;
+  }
+  #reframe .split .old .tag{color:var(--ash-light);}
+  #reframe .split .new .tag{color:var(--thread);}
+  #reframe .split .old{color:var(--ash-light);}
+  #reframe .split .new{color:#F4EEDF;}
+  @media(max-width:560px){
+    #reframe .split{grid-template-columns:1fr;text-align:center;}
+    #reframe .split .arrow{transform:rotate(90deg);}
+  }
+  #reframe .close-line{
+    margin-top:56px;
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(18px,2.6vw,24px);
+    color:var(--thread);
+  }
+
+  /* ---------- 縁 招致 ---------- */
+  #arrival{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(184,147,90,0.14), transparent 60%),
+      var(--parchment);
+    color:var(--ink-on-light);
+    flex-direction:column;
+    text-align:center;
+    padding-top:min(16vh,130px);
+    padding-bottom:min(12vh,100px);
+  }
+  #arrival .field-eyebrow{color:var(--thread-dim);justify-content:center;display:flex;}
+  #arrival h2{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    font-size:clamp(26px,4.4vw,42px);
+    line-height:1.9;
+    margin-bottom:26px;
+  }
+  #arrival p.desc{
+    max-width:520px;
+    margin:0 auto 52px;
+    font-size:15px;
+    color:var(--ash);
+  }
+  #thread-svg{
+    display:block;
+    margin:0 auto 48px;
+    width:min(80vw,340px);
+    height:auto;
+  }
+  .cta-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:18px 40px;
+    background:var(--ink-on-light);
+    color:var(--parchment);
+    font-size:14px;
+    letter-spacing:0.15em;
+    border-radius:2px;
+    transition:transform 0.35s ease, box-shadow 0.35s ease;
+    box-shadow:0 12px 30px -14px rgba(20,20,10,0.45);
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn .arrow-ico{
+    font-family:'Shippori Mincho', serif;
+    color:var(--thread);
+  }
+  #arrival .foot-note{
+    margin-top:26px;
+    font-size:12px;
+    color:var(--ash);
+    letter-spacing:0.08em;
+  }
+
+  footer{
+    background:var(--parchment-2);
+    color:var(--ash);
+    text-align:center;
+    font-size:12px;
+    letter-spacing:0.1em;
+    padding:28px 24px 34px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .scroll-cue::after{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="dial" id="dial">
+  <div class="dial-item" data-key="hiku"><span class="char">引</span><span class="label">引き寄せる</span></div>
+  <div class="dial-item" data-key="waku"><span class="char">惑</span><span class="label">惑わされる</span></div>
+  <div class="dial-item" data-key="migaku"><span class="char">磨</span><span class="label">磨く</span></div>
+  <div class="dial-item" data-key="musubu"><span class="char">結</span><span class="label">結び直す</span></div>
+  <div class="dial-item" data-key="en"><span class="char">縁</span><span class="label">縁へ</span></div>
+</nav>
+
+<!-- 引 -->
+<section id="hero">
+  <div class="wrap">
+    <p class="eyebrow serif">引</p>
+    <h1>
+      <span class="strong">正解</span>は<span class="soft">探しものじゃない</span><br>
+      <span class="strong">引き寄せる</span>もの
+    </h1>
+    <p class="sub">相談先も、アプリも、選択肢も、もう十分にある。<br>足りないのは、それを"引き寄せる"感覚。</p>
+  </div>
+  <div class="scroll-cue"></div>
+</section>
+
+<!-- 惑・磨・結の背骨(スクロール連動キャンバス) -->
+<div id="field-zone">
+  <div class="field-sticky">
+    <canvas id="dotcanvas"></canvas>
+
+    <div class="field-copy">
+      <div class="field-block" data-stage="waku">
+        <div class="wrap">
+          <p class="field-eyebrow serif">惑</p>
+          <p class="serif" style="font-size:clamp(30px,4.6vw,46px);color:var(--thread-dim);line-height:1.3;margin-bottom:6px;">共感</p>
+          <p style="font-size:13px;color:var(--ash);letter-spacing:0.05em;margin-bottom:24px;">いいね。フォロー。コメント。</p>
+          <h2>今、あなたに向いている「反応」の多くは、<br>あなた自身が引き寄せたものじゃない。<br><em>AIのレコメンド</em>が選んだ結果です。</h2>
+          <p class="note">労力をかけても、本当のファンには当たらない。表示されているのは、あなたではなく、アルゴリズムの確率です。</p>
+        </div>
+      </div>
+
+      <div class="field-block" data-stage="migaku">
+        <div class="wrap">
+          <p class="field-eyebrow serif">磨</p>
+          <p class="serif" style="font-size:clamp(20px,3vw,30px);color:var(--thread-dim);line-height:1.6;margin-bottom:20px;">今の詰まり、<br>臨界点をみる。<br>じぶんひとりの基準点を知る。</p>
+          <h2>縁起とフラクタルで、<br>自分の<em>"型"</em>に気づくと——</h2>
+          <p class="note">「一人で抱えるよりずっと早い」<br>「何年も同じところをぐるぐるしていたのが、3回でその理由の輪郭が見えてくる」<br>「環境の力を借りて成功する」</p>
+          <div class="fact-row">
+            <div class="fact-cell">
+              <div class="num serif">速さ</div>
+              <div class="cap">出会うまでの時間</div>
+            </div>
+            <div class="fact-cell">
+              <div class="num serif">無駄のなさ</div>
+              <div class="cap">やり取りの精度</div>
+            </div>
+            <div class="fact-cell">
+              <div class="num serif">質</div>
+              <div class="cap">辿り着く相手</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block" data-stage="musubu-lead">
+        <div class="wrap">
+          <p class="field-eyebrow serif">結</p>
+          <h2>ただし、席は<em>誰にでも</em>あるわけではありません。</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 結(共感の再定義) -->
+<section id="reframe">
+  <div class="wrap">
+    <p class="field-eyebrow serif">結</p>
+    <h2 class="serif">AIが<br>先生・カウンセラーになった今<br>人にできるのは<br>共感・傾聴を超えるスキル</h2>
+    <p class="close-line serif">"引き寄せ型"の、秘訣は——視座。</p>
+  </div>
+</section>
+
+<!-- 縁 -->
+<section id="arrival">
+  <div class="wrap">
+    <p class="field-eyebrow serif">縁</p>
+    <svg id="thread-svg" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g id="scatter-dots" opacity="0.55"></g>
+      <path id="converge-thread" d="M 20 130 Q 120 40 300 30" fill="none" stroke="#B8935A" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="300" cy="30" r="4" fill="#B8935A"/>
+      <circle cx="300" cy="30" r="9" fill="none" stroke="#B8935A" stroke-width="1" opacity="0.5">
+        <animate attributeName="r" values="9;16;9" dur="4.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0;0.5" dur="4.2s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <h2 class="serif">視座が縁を結ぶ場所</h2>
+    <p class="desc">ここから先は、縁起とフラクタルと一緒に。</p>
+    <a class="cta-btn" href="https://nanbasuri891-maker.github.io/enfra/" target="_blank" rel="noopener">
+      <span>縁起とフラクタルへ</span><span class="arrow-ico">→</span>
+    </a>
+    <a href="https://line.me/ti/g2/FCnynAq6hme8SNGSsBAwwHYF3X4cY_frZT3g0g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" rel="noopener" style="margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <svg width="48" height="48" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="16" cy="16" r="16" fill="#1C1F24"/>
+        <path d="M16 8.5c-4.7 0-8.5 2.9-8.5 6.4 0 3.1 3 5.8 6.9 6.3.3.06.62.19.71.42.08.21.05.53.03.74l-.11.68c-.03.2-.16.8.7.44.87-.37 4.68-2.76 6.39-4.73 1.18-1.29 1.77-2.61 1.77-3.88 0-3.5-3.8-6.4-8.5-6.4z" fill="#F6F1E7"/>
+        <text x="16" y="17" font-family="Arial, Helvetica, sans-serif" font-size="5.2" font-weight="700" fill="#1C1F24" text-anchor="middle" letter-spacing="0.3">LINE</text>
+      </svg>
+      <p style="font-size:11.5px;color:var(--ash);letter-spacing:0.04em;line-height:1.85;text-align:center;">LINEグループに接続します<br>まずはニックネームで登録OK</p>
+    </a>
+    <p class="foot-note">縁起とフラクタル / Engi × Fractal</p>
+  </div>
+</section>
+
+<footer>
+  © Engi × Fractal — 縁起とフラクタル
+</footer>
+
+<script>
+(function(){
+  // ---------- progress dial highlight ----------
+  const dial = document.getElementById('dial');
+  const dialItems = Array.from(dial.querySelectorAll('.dial-item'));
+  const fieldZoneEl = document.getElementById('field-zone');
+  const heroEl = document.getElementById('hero');
+  const reframeEl = document.getElementById('reframe');
+  const arrivalEl = document.getElementById('arrival');
+  const fieldBlocks = Array.from(document.querySelectorAll('.field-block'));
+
+  const lightSections = [fieldZoneEl, arrivalEl];
+
+  // maps field-zone internal progress (0-1, split into 3 equal stages) to block index
+  function fieldProgress(){
+    const rect = fieldZoneEl.getBoundingClientRect();
+    const total = fieldZoneEl.offsetHeight - window.innerHeight;
+    const scrolled = -rect.top;
+    return total > 0 ? Math.max(0, Math.min(1, scrolled/total)) : 0;
+  }
+
+  function currentStage(){
+    const y = window.scrollY + window.innerHeight * 0.45;
+    const heroBottom = heroEl.getBoundingClientRect().bottom + window.scrollY;
+    const fieldTop = fieldZoneEl.getBoundingClientRect().top + window.scrollY;
+    const fieldBottom = fieldZoneEl.getBoundingClientRect().bottom + window.scrollY;
+    const reframeTop = reframeEl.getBoundingClientRect().top + window.scrollY;
+    const arrivalTop = arrivalEl.getBoundingClientRect().top + window.scrollY;
+
+    if(y < fieldTop) return 'hiku';
+    if(y < fieldBottom){
+      const fp = fieldProgress();
+      const idx = Math.min(2, Math.floor(fp*3));
+      return ['waku','migaku','musubu'][idx];
+    }
+    if(y < arrivalTop) return 'musubu';
+    return 'en';
+  }
+
+  function updateFieldBlocks(){
+    const fp = fieldProgress();
+    const idx = Math.min(2, Math.floor(fp*3));
+    fieldBlocks.forEach((b,i) => b.classList.toggle('active', i === idx));
+  }
+
+  function isOnLight(){
+    let onLight = false;
+    for(const sec of lightSections){
+      const r = sec.getBoundingClientRect();
+      if(r.top < 80 && r.bottom > 0) onLight = true;
+    }
+    return onLight;
+  }
+
+  function updateUI(){
+    const stage = currentStage();
+    dialItems.forEach(it => it.classList.toggle('active', it.dataset.key === stage));
+    dial.classList.toggle('on-light', isOnLight());
+    updateFieldBlocks();
+  }
+  document.addEventListener('scroll', updateUI, {passive:true});
+  window.addEventListener('resize', updateUI);
+  updateUI();
+
+  // ---------- dot field canvas: AI noise -> single thread ----------
+  const canvas = document.getElementById('dotcanvas');
+  const ctx = canvas.getContext('2d');
+  const fieldZone = document.getElementById('field-zone');
+  let W, H, DPR;
+  let dots = [];
+  const DOT_COUNT_BASE = 90;
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    seedDots();
+  }
+
+  function seedDots(){
+    dots = [];
+    const count = Math.round(DOT_COUNT_BASE * (W < 640 ? 0.55 : 1));
+    for(let i=0;i<count;i++){
+      dots.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: 1.1 + Math.random()*1.6,
+        phase: Math.random()*Math.PI*2,
+        speed: 0.15 + Math.random()*0.25
+      });
+    }
+    // pick the "true" dot near center-right, becomes gold
+    dots.sort((a,b)=> Math.hypot(a.x-W*0.68,a.y-H*0.42) - Math.hypot(b.x-W*0.68,b.y-H*0.42));
+    dots[0].isTrue = true;
+    dots[0].x = W*0.68; dots[0].y = H*0.42;
+  }
+
+  function reduceMotion(){
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function progress(){
+    // 0 at top of field-zone, 1 at bottom
+    const rect = fieldZone.getBoundingClientRect();
+    const total = fieldZone.offsetHeight - window.innerHeight;
+    const scrolled = -rect.top;
+    let p = total > 0 ? scrolled/total : 0;
+    return Math.max(0, Math.min(1, p));
+  }
+
+  let t = 0;
+  function draw(){
+    t += reduceMotion() ? 0 : 0.016;
+    const p = progress();
+    // convergence factor ramps from stage 2 (migaku) onward -> roughly p in [0.32,0.95]
+    const conv = Math.max(0, Math.min(1, (p - 0.30) / 0.55));
+
+    ctx.clearRect(0,0,W,H);
+
+    const trueDot = dots.find(d=>d.isTrue);
+
+    dots.forEach(d=>{
+      if(d.isTrue) return;
+      const drift = reduceMotion() ? 0 : Math.sin(t*d.speed + d.phase) * 3;
+      const fade = 1 - conv*0.7;
+      ctx.beginPath();
+      ctx.arc(d.x + drift, d.y + drift*0.6, d.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(107,112,120,${0.30*fade})`;
+      ctx.fill();
+
+      // faint thread from a few noise dots toward true dot as convergence increases, then fade
+      if(conv > 0.05 && conv < 0.85 && d.r > 1.9){
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(trueDot.x, trueDot.y);
+        ctx.strokeStyle = `rgba(184,147,90,${0.05*Math.sin(conv*Math.PI)})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+    });
+
+    // true dot: grows and glows gold as convergence increases
+    if(trueDot){
+      const glowR = 3 + conv*7;
+      const grad = ctx.createRadialGradient(trueDot.x,trueDot.y,0,trueDot.x,trueDot.y,glowR*3);
+      grad.addColorStop(0, `rgba(184,147,90,${0.45*conv})`);
+      grad.addColorStop(1, 'rgba(184,147,90,0)');
+      ctx.beginPath();
+      ctx.arc(trueDot.x, trueDot.y, glowR*3, 0, Math.PI*2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(trueDot.x, trueDot.y, 2 + conv*3, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(184,147,90,${0.35 + conv*0.65})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+
+  // ---------- arrival svg scatter dots ----------
+  const scatterGroup = document.getElementById('scatter-dots');
+  for(let i=0;i<14;i++){
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', 10 + Math.random()*260);
+    c.setAttribute('cy', 20 + Math.random()*120);
+    c.setAttribute('r', 1 + Math.random()*1.3);
+    c.setAttribute('fill', '#8C8577');
+    c.setAttribute('opacity', (0.15 + Math.random()*0.25).toFixed(2));
+    scatterGroup.appendChild(c);
+  }
+})();
+</script>
+
+</body>
+</html>
