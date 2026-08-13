@@ -74,6 +74,10 @@
   @media(min-width:640px){
     .dial-item .label{display:inline;font-size:11px;}
   }
+  @media(max-width:480px){
+    .dial{padding:14px 12px;gap:14px;}
+    .dial-item .char{font-size:17px;}
+  }
 
   section{
     position:relative;
@@ -83,6 +87,10 @@
     justify-content:center;
   }
   .wrap{width:100%;max-width:760px;margin:0 auto;}
+  @media(max-width:480px){
+    section{padding:72px 20px;}
+    #hero{padding-top:0;padding-bottom:0;}
+  }
 
   /* ---------- 引 hero ---------- */
   #hero{
@@ -144,7 +152,7 @@
     position:relative;
     background:var(--frost);
     color:var(--ink-on-light);
-    height:300vh;
+    height:100vh;
   }
   .field-sticky{
     position:sticky;
@@ -237,6 +245,81 @@
     .field-block p.note{font-size:12.5px;margin-top:14px;line-height:1.8;}
     .fact-row{margin-top:16px;}
   }
+  @media(max-width:480px){
+    .fact-row{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      border-top:none;
+      gap:1px;
+      background:rgba(107,112,120,0.28);
+    }
+    .fact-cell{
+      background:var(--frost);
+      border-right:none;
+      padding:14px 6px 12px;
+      text-align:center;
+    }
+    .fact-cell .num{font-size:16px;}
+    .fact-cell .cap{font-size:10px;letter-spacing:0;}
+  }
+
+  /* ---------- 磨(独立セクション・型) ---------- */
+  #migaku-section{
+    background:var(--frost);
+    color:var(--ink-on-light);
+  }
+  #migaku-section .field-eyebrow{color:var(--ash);}
+  #migaku-section h2{
+    font-weight:600;
+    font-size:clamp(24px,3.6vw,38px);
+    line-height:1.85;
+    color:var(--ink-on-light);
+  }
+  #migaku-section h2 em{
+    font-style:normal;
+    color:var(--thread-dim);
+    border-bottom:1px solid var(--thread-dim);
+    padding-bottom:2px;
+  }
+
+  /* ---------- 磨(独立セクション・基準点) ---------- */
+  #migaku-lead-section{
+    background:var(--graphite);
+    color:var(--frost);
+  }
+  #migaku-lead-section .field-eyebrow{color:var(--ash-light);}
+  #migaku-lead-section .migaku-lead{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(20px,3vw,30px);
+    color:var(--thread);
+    line-height:1.7;
+  }
+  #migaku-lead-section .migaku-quotes{
+    margin-top:32px;
+    font-size:16px;
+    color:var(--frost);
+    line-height:2.1;
+  }
+
+  /* ---------- 結(招致テーザー) ---------- */
+  #reframe-teaser{
+    background:var(--parchment);
+    color:var(--ink-on-light);
+  }
+  #reframe-teaser .field-eyebrow{color:var(--thread-dim);}
+  #reframe-teaser .reframe-lead{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    font-size:clamp(20px,3.2vw,30px);
+    line-height:1.9;
+    color:var(--ink-on-light);
+  }
+  #reframe-teaser .reframe-lead em{
+    font-style:normal;
+    color:var(--thread-dim);
+    border-bottom:1px solid var(--thread-dim);
+    padding-bottom:2px;
+  }
 
   /* ---------- 結 共感の再定義 ---------- */
   #reframe{
@@ -303,6 +386,9 @@
     padding-bottom:min(12vh,100px);
   }
   #arrival .field-eyebrow{color:var(--thread-dim);justify-content:center;display:flex;}
+  @media(max-width:480px){
+    #arrival{padding-top:min(14vh,90px);padding-bottom:min(9vh,60px);}
+  }
   #arrival h2{
     font-family:'Shippori Mincho', serif;
     font-weight:600;
@@ -391,7 +477,7 @@
     <canvas id="dotcanvas"></canvas>
 
     <div class="field-copy">
-      <div class="field-block" data-stage="waku">
+      <div class="field-block active" data-stage="waku">
         <div class="wrap">
           <p class="field-eyebrow serif">惑</p>
           <p class="serif" style="font-size:clamp(30px,4.6vw,46px);color:var(--thread-dim);line-height:1.3;margin-bottom:6px;">共感</p>
@@ -400,45 +486,54 @@
           <p class="note">労力をかけても、本当のファンには当たらない。<br>表示されているのは、アルゴリズムのうむ確率。</p>
         </div>
       </div>
-
-      <div class="field-block" data-stage="migaku">
-        <div class="wrap">
-          <p class="field-eyebrow serif">磨</p>
-          <h2>縁起とフラクタルで、<br>自分の<em>"型"</em>に気づくと——</h2>
-          <p class="note" style="font-size:16px;line-height:2.1;">「一人で抱えるよりずっと早い」<br>「何年も同じところをぐるぐるしていたのが、2ヶ月で輪郭が見えてくる」<br>「環境の力を借りて成功する」</p>
-          <div class="fact-row">
-            <div class="fact-cell">
-              <div class="num serif">速さ</div>
-              <div class="cap">出会うまでの時間</div>
-            </div>
-            <div class="fact-cell">
-              <div class="num serif">無駄のなさ</div>
-              <div class="cap">やり取りの精度</div>
-            </div>
-            <div class="fact-cell">
-              <div class="num serif">質</div>
-              <div class="cap">辿り着く相手</div>
-            </div>
-          </div>
-          <p class="serif" style="font-size:clamp(20px,3vw,30px);color:var(--thread-dim);line-height:1.6;margin-top:24px;">じぶんの基準点を知る。<br>今詰まっている場所、<br>臨界点をみる。</p>
-        </div>
-      </div>
-
-      <div class="field-block" data-stage="musubu-lead">
-        <div class="wrap">
-          <p class="field-eyebrow serif">結</p>
-          <h2>ただし、この席は<em>誰にでも</em>あるわけではありません。</h2>
-        </div>
-      </div>
     </div>
   </div>
 </div>
+
+<!-- 磨(独立セクション) -->
+<section id="migaku-section">
+  <div class="wrap">
+    <p class="field-eyebrow serif">磨</p>
+    <h2 class="serif">縁起とフラクタルで、<br>自分の<em>"型"</em>に気づくと——</h2>
+    <div class="fact-row">
+      <div class="fact-cell">
+        <div class="num serif">速さ</div>
+        <div class="cap">出会うまでの時間</div>
+      </div>
+      <div class="fact-cell">
+        <div class="num serif">無駄のなさ</div>
+        <div class="cap">やり取りの精度</div>
+      </div>
+      <div class="fact-cell">
+        <div class="num serif">質</div>
+        <div class="cap">辿り着く相手</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 磨(基準点・臨界点) -->
+<section id="migaku-lead-section">
+  <div class="wrap">
+    <p class="field-eyebrow serif">磨</p>
+    <p class="migaku-lead">じぶんの基準点を知る。<br>今詰まっている場所、<br>臨界点——クリティカルポイントをみる。</p>
+    <p class="note migaku-quotes">「一人で抱えるよりずっと早い」<br>「何年も同じところをぐるぐるしていたのが、2ヶ月で輪郭が見えてくる」<br>「環境の力を借りて成長する」<br>「気づけば、成功者になってる」</p>
+  </div>
+</section>
+
+<!-- 結(招致テーザー) -->
+<section id="reframe-teaser">
+  <div class="wrap">
+    <p class="field-eyebrow serif">結</p>
+    <p class="reframe-lead">ただし、この席は<em>誰にでも</em>あるわけではありません。</p>
+  </div>
+</section>
 
 <!-- 結(共感の再定義) -->
 <section id="reframe">
   <div class="wrap">
     <p class="field-eyebrow serif">結</p>
-    <h2 class="serif">AIが<br>先生・カウンセラーになった今<br>人を"引き寄せる"<br>共感・傾聴・共鳴を<br>超えるスキル</h2>
+    <h2 class="serif">AI時代の<br>人を"引き寄せる"<br>共感・傾聴・共鳴を<br>超えるスキル</h2>
     <p class="close-line serif">秘訣は——視座。</p>
   </div>
 </section>
@@ -484,13 +579,16 @@
   const dialItems = Array.from(dial.querySelectorAll('.dial-item'));
   const fieldZoneEl = document.getElementById('field-zone');
   const heroEl = document.getElementById('hero');
+  const migakuEl = document.getElementById('migaku-section');
+  const migakuLeadEl = document.getElementById('migaku-lead-section');
+  const reframeTeaserEl = document.getElementById('reframe-teaser');
   const reframeEl = document.getElementById('reframe');
   const arrivalEl = document.getElementById('arrival');
   const fieldBlocks = Array.from(document.querySelectorAll('.field-block'));
 
-  const lightSections = [fieldZoneEl, arrivalEl];
+  const lightSections = [fieldZoneEl, migakuEl, reframeTeaserEl, arrivalEl];
 
-  // maps field-zone internal progress (0-1, split into 3 equal stages) to block index
+  // maps field-zone internal progress (0-1, split into 2 equal stages) to block index
   function fieldProgress(){
     const rect = fieldZoneEl.getBoundingClientRect();
     const total = fieldZoneEl.offsetHeight - window.innerHeight;
@@ -500,26 +598,20 @@
 
   function currentStage(){
     const y = window.scrollY + window.innerHeight * 0.45;
-    const heroBottom = heroEl.getBoundingClientRect().bottom + window.scrollY;
     const fieldTop = fieldZoneEl.getBoundingClientRect().top + window.scrollY;
     const fieldBottom = fieldZoneEl.getBoundingClientRect().bottom + window.scrollY;
     const reframeTop = reframeEl.getBoundingClientRect().top + window.scrollY;
     const arrivalTop = arrivalEl.getBoundingClientRect().top + window.scrollY;
 
     if(y < fieldTop) return 'hiku';
-    if(y < fieldBottom){
-      const fp = fieldProgress();
-      const idx = Math.min(2, Math.floor(fp*3));
-      return ['waku','migaku','musubu'][idx];
-    }
+    if(y < fieldBottom) return 'waku';
+    if(y < reframeTop) return 'migaku';
     if(y < arrivalTop) return 'musubu';
     return 'en';
   }
 
   function updateFieldBlocks(){
-    const fp = fieldProgress();
-    const idx = Math.min(2, Math.floor(fp*3));
-    fieldBlocks.forEach((b,i) => b.classList.toggle('active', i === idx));
+    fieldBlocks.forEach(b => b.classList.add('active'));
   }
 
   function isOnLight(){
