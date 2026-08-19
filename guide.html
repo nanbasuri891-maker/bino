@@ -104,14 +104,20 @@
   .acc-header .ah-text h2{font-size:clamp(22px,2.8vw,32px); margin-top:16px; line-height:1.5;}
   .acc-header .ah-teaser{margin-top:18px; font-size:14.5px; opacity:0.8; max-width:56ch;}
   .acc-header .enfra-logo{width:150px; margin-bottom:20px; opacity:0.92;}
+  .acc-icon-wrap{ flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:6px; }
   .acc-icon{
-    flex-shrink:0; width:38px; height:38px; border:1px solid var(--line-light); border-radius:50%;
+    width:38px; height:38px; border:1px solid var(--line-light); border-radius:50%;
     display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:19px;
     transition:transform .35s ease, background .25s ease, color .25s ease, border-color .25s ease;
-    margin-top:6px;
+  }
+  .acc-icon-label{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.04em; opacity:0.5; white-space:nowrap;
   }
   .accordion-item.open .acc-icon{ transform:rotate(45deg); background:var(--rose); color:var(--text-light); border-color:var(--rose);}
+  .accordion-item.open .acc-icon-label{ color:var(--rose-deep); opacity:0.75; }
   .acc-header:hover .acc-icon{ border-color:var(--rose); }
+  .hero-illustration{ max-width:560px; margin:0 auto 64px; }
+  .hero-illustration img{ width:100%; height:auto; }
   .acc-content{ max-height:0; overflow:hidden; opacity:0; transition:max-height .5s ease, opacity .4s ease; }
   .accordion-item.open .acc-content{ opacity:1; }
   .acc-inner{ padding-bottom:56px; }
@@ -278,7 +284,15 @@
 </nav>
 <div style="height:96px;"></div>
 
-<section class="light pad">
+<section class="light" style="padding:56px 0 0;">
+  <div class="wrap">
+    <div class="hero-illustration">
+      <img src="sun-moon-couple.png" alt="太陽と月、向き合う二人">
+    </div>
+  </div>
+</section>
+
+<section class="light pad" style="padding-top:0;">
   <div class="wrap">
 
     <div class="accordion">
@@ -291,7 +305,7 @@
             <h2>脳には、7つの<br>「決めつけスイッチ」がある。</h2>
             <p class="ah-teaser">事前の信念。感情。インセンティブ。主体性。好奇心。心の状態。他人の目。これは全部、脳が生き延びるために持っている標準装備です。でも同時に、この7つが働くたびに、脳は「解釈」を固定させようとします。</p>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -327,10 +341,10 @@
         <button class="acc-header" aria-expanded="false">
           <div class="ah-text">
             <span class="eyebrow">02 — tuning</span>
-            <h2>美脳は<br>固定されたストーリーで<br>煩わしい脳になりにくい<br>状態をキープすること。</h2>
+            <h2>美脳は<br>煩悩になりにくい<br>状態の脳。</h2>
             <p class="ah-teaser">7つのスイッチは、生きている限り働き続けます。でも、暴走スイッチが起きたときに気づき、別の機会に起きたことではなく今の事実に意味を選び直せる回数を、増やすことはできると、煩悩から美脳に調律され整った状態になります。</p>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -355,10 +369,10 @@
         <button class="acc-header" aria-expanded="false">
           <div class="ah-text">
             <span class="eyebrow">03 — shift</span>
-            <h2>AIで、世界は<br>確実にシフトしている。</h2>
+            <h2>世界はAIで<br>確実にシフトしている。</h2>
             <p class="ah-teaser">AIが役割を代替するようになるほど、求められているのは役割ではなく——「何ができるか」ではなく「何者であるか」になります。だからこそ、ブランディングスコアが重要視されています。</p>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -373,10 +387,10 @@
         <button class="acc-header" aria-expanded="false">
           <div class="ah-text">
             <span class="eyebrow">04 — score</span>
-            <h2>現在地を知る。<br>脳のスイッチが、<br>関係性にどう出ているか。</h2>
+            <h2>脳のスイッチが<br>どう出ているか。<br>現在地を知る。</h2>
             <p class="ah-teaser">スイッチが繰り返し切られてきた結果を測ることができます。これが、ブランディングスコアです。あなたの「スイッチ」が、関係性にどう表れているか。ブランディングスコアは、これを確率分布で可視化します。</p>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -412,7 +426,7 @@
             <span class="eyebrow">05 — example</span>
             <h2>調律されていない状態は、<br>すでに日常の中にあります。</h2>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -464,7 +478,7 @@
             <span class="eyebrow">05.5 — before the session</span>
             <h2>「相手が変わること」に、<br>自分の時間を費やしていませんか？</h2>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -488,7 +502,7 @@
             <h2>「縁起とフラクタル」</h2>
             <p class="ah-teaser">固定されたストーリーは、人間関係のパターンになって顕れます。自分では気づけない盲点にフォーカスしたセッションに進みます。</p>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -531,12 +545,9 @@
         <button class="acc-header" aria-expanded="false">
           <div class="ah-text">
             <span class="eyebrow">07 — future</span>
-            <h2>美脳になると「選ばれる」から<br>「選べる」にシフトする</h2>
-            <div class="future-art" style="margin-top:22px;">
-              <img src="sun-moon-couple.png" alt="太陽と月、向き合う二人">
-            </div>
+            <h2>選ばれるから<br>選ぶにシフトするには</h2>
           </div>
-          <span class="acc-icon">+</span>
+          <span class="acc-icon-wrap"><span class="acc-icon">+</span><span class="acc-icon-label">開く</span></span>
         </button>
         <div class="acc-content">
           <div class="acc-inner">
@@ -620,6 +631,7 @@
   items.forEach(item=>{
     const btn = item.querySelector('.acc-header');
     const content = item.querySelector('.acc-content');
+    const label = item.querySelector('.acc-icon-label');
     btn.addEventListener('click', ()=>{
       const isOpen = item.classList.contains('open');
       if(isOpen){
@@ -627,10 +639,12 @@
         requestAnimationFrame(()=>{ content.style.maxHeight = '0px'; });
         item.classList.remove('open');
         btn.setAttribute('aria-expanded','false');
+        if(label) label.textContent = '開く';
       } else {
         item.classList.add('open');
         btn.setAttribute('aria-expanded','true');
         content.style.maxHeight = content.scrollHeight + 'px';
+        if(label) label.textContent = '閉じる';
       }
     });
   });
