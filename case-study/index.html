@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>改善案は、正しかった。届かなかっただけだ。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:transparent;
+    --ink:#181523;
+    --muted:#5c5670;
+    --muted-2:#8f89a0;
+    --cyan:#0fa3c4;
+    --pink:#d6478f;
+    --yellow:#b8892a;
+    --line: rgba(20,15,35,0.1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{background:var(--bg-base);}
+  body{
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-weight:400;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .mincho{ font-family:'Shippori Mincho B1', serif; }
+
+  section{
+    position:relative;
+    padding:9vh 28px;
+  }
+  .container{
+    max-width:600px;
+    margin:0 auto;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero-eyebrow{
+    text-align:center;
+    font-family:'Shippori Mincho B1', serif;
+    font-size:13px;
+    letter-spacing:0.2em;
+    color:var(--muted-2);
+    margin-bottom:22px;
+  }
+  .hero-headline{
+    font-family:'Shippori Mincho B1', serif;
+    font-weight:800;
+    font-size:clamp(1.7rem, 6.4vw, 2.7rem);
+    line-height:1.55;
+    text-align:center;
+    color:var(--ink);
+  }
+  .hero-headline .accent{
+    background: linear-gradient(90deg, #0fa3c4, #d6478f 60%, #b8892a);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero-sub{
+    margin-top:28px;
+    text-align:center;
+    font-size:14px;
+    color:var(--muted);
+    max-width:26em;
+    margin-left:auto;
+    margin-right:auto;
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- DIVIDER ---------- */
+  .circuit-divider{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:0 0 4vh;
+  }
+  .circuit-divider svg{
+    width:100%;
+    max-width:640px;
+    height:auto;
+    display:block;
+  }
+
+  /* ---------- LEDE / BODY ---------- */
+  .lede{
+    font-family:'Shippori Mincho B1', serif;
+    font-weight:700;
+    font-size:clamp(1.3rem, 4vw, 1.7rem);
+    line-height:1.9;
+    color:var(--ink);
+  }
+  .body-copy{
+    margin-top:28px;
+    font-size:16px;
+    color:var(--muted);
+    line-height:2.05;
+    letter-spacing:0.01em;
+  }
+  .body-copy p{ margin-top:1.3em; }
+  .body-copy p:first-child{ margin-top:0; }
+
+  /* ---------- FLOW ---------- */
+  .flow{
+    margin-top:8px;
+    display:flex;
+    flex-direction:column;
+  }
+  .flow-line{
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+    font-size:16px;
+    color:var(--muted);
+    line-height:1.9;
+  }
+  .flow-line:first-child{ padding-top:0; }
+  .flow-line.turn{
+    color:var(--yellow);
+    font-family:'Shippori Mincho B1', serif;
+    font-size:15px;
+    letter-spacing:0.15em;
+    text-align:center;
+    border-bottom:none;
+    padding:26px 0;
+  }
+  .flow-line.result{
+    color:var(--pink);
+    font-family:'Shippori Mincho B1', serif;
+    font-weight:700;
+    font-size:19px;
+    text-align:center;
+    border-bottom:none;
+    line-height:1.85;
+  }
+
+  /* ---------- CLOSING ---------- */
+  .closing-quote{
+    font-family:'Shippori Mincho B1', serif;
+    font-weight:700;
+    font-size:clamp(1.35rem, 4.6vw, 1.9rem);
+    line-height:2.0;
+    color:var(--ink);
+    text-align:center;
+  }
+  .closing-quote .accent{
+    background: linear-gradient(90deg, #0fa3c4, #b8892a);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  .meyou-quote{
+    font-family:'Shippori Mincho B1', serif;
+    font-weight:700;
+    font-size:clamp(1.15rem, 4.2vw, 1.5rem);
+    line-height:1.85;
+    color:var(--ink);
+    text-align:center;
+  }
+  .meyou-quote .accent-me,
+  .meyou-quote .accent-you{
+    background: linear-gradient(90deg, #0fa3c4, #d6478f 60%, #b8892a);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .small-note{
+    margin-top:24px;
+    font-size:13px;
+    color:var(--muted-2);
+    text-align:center;
+    line-height:1.8;
+  }
+
+  .cta-line{
+    margin-top:44px;
+    font-family:'Shippori Mincho B1', serif;
+    font-weight:700;
+    font-size:clamp(1.15rem, 4.2vw, 1.5rem);
+    line-height:1.85;
+    color:var(--ink);
+    text-align:center;
+  }
+  .cta-line .accent{
+    background: linear-gradient(90deg, #0fa3c4, #d6478f 60%, #b8892a);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  footer{
+    padding:6vh 28px 8vh;
+    text-align:center;
+  }
+  .footer-note{
+    font-size:12px;
+    color:var(--muted-2);
+    letter-spacing:0.05em;
+  }
+</style>
+</head>
+<body>
+
+<section style="padding-top:10vh;">
+  <div class="container">
+    <p class="hero-eyebrow">CASE STUDY</p>
+    <h1 class="hero-headline">
+      <span class="accent">正しい。</span><br>
+      でも届かない。
+    </h1>
+    <p class="hero-sub">言葉よりずっと以前、周波数で決まっている。</p>
+  </div>
+</section>
+
+<svg class="circuit-divider" viewBox="0 0 700 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 20 L120 20 L140 8 L160 32 L180 20 L280 20 L300 8 L320 32 L340 20 L440 20 L460 8 L480 32 L500 20 L700 20" stroke="url(#g1)" stroke-width="1.2" opacity="0.75"/>
+  <circle cx="140" cy="8" r="2.5" fill="#0fa3c4"/>
+  <circle cx="320" cy="32" r="2.5" fill="#d6478f"/>
+  <circle cx="460" cy="8" r="2.5" fill="#b8892a"/>
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="700" y2="0">
+      <stop offset="0%" stop-color="#0fa3c4"/>
+      <stop offset="50%" stop-color="#d6478f"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <p class="lede">あるお稽古教室の話。</p>
+    <div class="body-copy">
+      <p>お稽古教室を開業した。</p>
+      <p>最初の2〜3年は、売れていた。</p>
+      <p>ところが、ある時からぱたりと、売上がゼロになった。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="body-copy" style="margin-top:0;">
+      <p>セールスの指導を受け、改善点も明確になった。</p>
+    </div>
+    <div class="flow" style="margin-top:36px;">
+      <div class="flow-line turn">そこで、見えてきたこと——</div>
+    </div>
+    <div class="body-copy" style="margin-top:0;">
+      <p>「改善」より「感情」で「結論」づけてしまい、PDCAに乗らない。</p>
+    </div>
+  </div>
+</section>
+
+<svg class="circuit-divider" viewBox="0 0 700 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 20 L120 20 L140 8 L160 32 L180 20 L280 20 L300 8 L320 32 L340 20 L440 20 L460 8 L480 32 L500 20 L700 20" stroke="url(#g2)" stroke-width="1.2" opacity="0.75"/>
+  <circle cx="140" cy="8" r="2.5" fill="#0fa3c4"/>
+  <circle cx="320" cy="32" r="2.5" fill="#d6478f"/>
+  <circle cx="460" cy="8" r="2.5" fill="#b8892a"/>
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="700" y2="0">
+      <stop offset="0%" stop-color="#0fa3c4"/>
+      <stop offset="50%" stop-color="#d6478f"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <p class="lede">パートナーシップ</p>
+    <div class="body-copy">
+      <p>仕事に疲れて家に帰る。</p>
+      <p>家事はいつも中途半端なまま。</p>
+      <p>家に帰っても、仕事が続く。</p>
+      <p>当たり散らすことはないけど、不機嫌さは隠せない。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="flow">
+      <div class="flow-line turn">そんなある日、妻から言われる——</div>
+      <div class="flow-line result">「何がアナタの地雷なのか。もう限界。」</div>
+    </div>
+    <div class="body-copy" style="margin-top:36px;">
+      <p>家事をしている自分は「支えている側」だと思っていた。</p>
+      <p>ところが妻から返ってきたのは、<br>「何が地雷になるのか分からない」という言葉。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="body-copy" style="margin-top:0;">
+      <p>自分では"我慢している"。</p>
+      <p>相手からは"常に顔色を読む必要がある"。</p>
+      <p>本人の認識と、関係の中で実際に起きていることがズレていた。</p>
+    </div>
+    <div class="body-copy" style="margin-top:1.3em;">
+      <p>気付けば、自分は「加害者」になっていた。</p>
+    </div>
+  </div>
+</section>
+
+<svg class="circuit-divider" viewBox="0 0 700 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 20 L120 20 L140 8 L160 32 L180 20 L280 20 L300 8 L320 32 L340 20 L440 20 L460 8 L480 32 L500 20 L700 20" stroke="url(#g3)" stroke-width="1.2" opacity="0.75"/>
+  <circle cx="140" cy="8" r="2.5" fill="#0fa3c4"/>
+  <circle cx="320" cy="32" r="2.5" fill="#d6478f"/>
+  <circle cx="460" cy="8" r="2.5" fill="#b8892a"/>
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="700" y2="0">
+      <stop offset="0%" stop-color="#0fa3c4"/>
+      <stop offset="50%" stop-color="#d6478f"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <p class="lede">女性同士のつきあい。</p>
+    <div class="body-copy">
+      <p>職場の女性につきあううちに、彼女が何か「問題」を抱えてるような感じがして。</p>
+      <p>気付いたら、自分が寄る側になっていた。</p>
+      <p>彼女にかけた気持ちの分、愛犬のケアが手薄くなっていた。</p>
+      <p>犬は、人間の4倍の速さで年をとる。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="flow">
+      <div class="flow-line turn">ある日、愛犬に「ごめんね」と<br>言葉をかけたら——</div>
+      <div class="flow-line result">唸って、隠れた。</div>
+    </div>
+    <div class="body-copy" style="margin-top:36px;">
+      <p>「ごめんね」は、不快なことが起こるサインだったのだ。</p>
+    </div>
+  </div>
+</section>
+
+<svg class="circuit-divider" viewBox="0 0 700 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 20 L120 20 L140 8 L160 32 L180 20 L280 20 L300 8 L320 32 L340 20 L440 20 L460 8 L480 32 L500 20 L700 20" stroke="url(#g4)" stroke-width="1.2" opacity="0.75"/>
+  <circle cx="140" cy="8" r="2.5" fill="#0fa3c4"/>
+  <circle cx="320" cy="32" r="2.5" fill="#d6478f"/>
+  <circle cx="460" cy="8" r="2.5" fill="#b8892a"/>
+  <defs>
+    <linearGradient id="g4" x1="0" y1="0" x2="700" y2="0">
+      <stop offset="0%" stop-color="#0fa3c4"/>
+      <stop offset="50%" stop-color="#d6478f"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <p class="lede">男同士のつきあい。</p>
+    <div class="body-copy">
+      <p>最初のうちは、アニキ風でうまくいく。</p>
+      <p>女性受けも、悪くない。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="flow">
+      <div class="flow-line turn">でも、中盤以降——</div>
+      <div class="flow-line result">必ず、相手側からブロックされる。</div>
+    </div>
+    <div class="body-copy" style="margin-top:36px;">
+      <p>相手が好きでたまらない。</p>
+      <p>なのに</p>
+      <p>自分の「愛」が伝わらない。</p>
+    </div>
+  </div>
+</section>
+
+<svg class="circuit-divider" viewBox="0 0 700 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 20 L120 20 L140 8 L160 32 L180 20 L280 20 L300 8 L320 32 L340 20 L440 20 L460 8 L480 32 L500 20 L700 20" stroke="url(#g5)" stroke-width="1.2" opacity="0.75"/>
+  <circle cx="140" cy="8" r="2.5" fill="#0fa3c4"/>
+  <circle cx="320" cy="32" r="2.5" fill="#d6478f"/>
+  <circle cx="460" cy="8" r="2.5" fill="#b8892a"/>
+  <defs>
+    <linearGradient id="g5" x1="0" y1="0" x2="700" y2="0">
+      <stop offset="0%" stop-color="#0fa3c4"/>
+      <stop offset="50%" stop-color="#d6478f"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <p class="lede">師弟関係。</p>
+    <div class="body-copy">
+      <p>大企業の広報・教諭・お稽古の先生も務めた。</p>
+      <p>自分がお金を払って</p>
+      <p>教え子に学ばせている。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="flow">
+      <div class="flow-line turn">でも、手伝ってもらう場では——</div>
+      <div class="flow-line result">平手打ちで<br>育てた教え子が離れていく。</div>
+    </div>
+  </div>
+</section>
+
+<svg class="circuit-divider" viewBox="0 0 700 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 20 L120 20 L140 8 L160 32 L180 20 L280 20 L300 8 L320 32 L340 20 L440 20 L460 8 L480 32 L500 20 L700 20" stroke="url(#g6)" stroke-width="1.2" opacity="0.75"/>
+  <circle cx="140" cy="8" r="2.5" fill="#0fa3c4"/>
+  <circle cx="320" cy="32" r="2.5" fill="#d6478f"/>
+  <circle cx="460" cy="8" r="2.5" fill="#b8892a"/>
+  <defs>
+    <linearGradient id="g6" x1="0" y1="0" x2="700" y2="0">
+      <stop offset="0%" stop-color="#0fa3c4"/>
+      <stop offset="50%" stop-color="#d6478f"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <p class="lede">経営者とのコンサル。</p>
+    <div class="body-copy">
+      <p>30年近いオーナー実績。</p>
+      <p>コンサルの進捗が、すすまない。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="flow">
+      <div class="flow-line turn">連絡すると——</div>
+      <div class="flow-line result">「お告げがあって・・・・」</div>
+    </div>
+    <div class="body-copy" style="margin-top:36px;">
+      <p>「やること」はすでに共有されている。</p>
+      <p>「ただ、やる」ができない。</p>
+      <p>別の話に、すり換わる。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="meyou-quote"><span class="accent-me">me</span>メッセージから、<br><span class="accent-you">you</span>メッセージへ。</p>
+    <p class="small-note">自分に向いたメッセージを<br>そのまま相手に向けていませんか？</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="cta-line"><span class="accent">「知覚の揺らぎ」</span>とは？</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="body-copy">
+      <p>恋愛、仕事、親子、友人関係。</p>
+      <p>一見まったく別の出来事でも、同じ人の中では同じ構造が繰り返されていることがあります。</p>
+      <p>美脳が見るのは、失敗した一場面ではありません。</p>
+      <p>その人が何を見て、どう反応し、なぜ同じ場所へ戻ってくるのか。</p>
+      <p>その構造を一緒に見つけ、今まで選べなかった方向まで可動域を広げていきます。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-note">美脳調律プログラム — CASE STUDY</p>
+</footer>
+
+</body>
+</html>
