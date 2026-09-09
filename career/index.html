@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美脳になればうまくいく</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF7;
+    --bg-raise:#F1EFE8;
+    --ink:#1C1B18;
+    --ink-muted:#5B5850;
+    --ink-faint:#7A776D;
+    --blue:#1E8FB0;
+    --pink:#C93E8F;
+    --amber:#B9860E;
+    --line:rgba(28,27,24,0.18);
+    --serif:'Zen Kaku Gothic New', sans-serif;
+    --sans:'Noto Sans JP', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.9;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+  .narrow{max-width:640px;margin:0 auto;padding:0 32px;}
+
+  /* ---- Hero ---- */
+  .hero{
+    display:flex;
+    min-height:100vh;
+    align-items:stretch;
+  }
+  .hero-copy{
+    flex:0 0 44%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:64px 48px;
+    gap:28px;
+  }
+  .hero-logo{
+    height:28px;
+    width:auto;
+    display:block;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(28px,3.4vw,42px);
+    line-height:1.5;
+    margin:0;
+  }
+  .hero h1 .accent{color:var(--blue);}
+  .hero p{
+    font-size:15px;
+    color:var(--ink-muted);
+    line-height:2;
+    margin:0;
+  }
+  .hero-img{
+    flex:1;
+    position:relative;
+    overflow:hidden;
+    min-height:100vh;
+  }
+  .hero-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:60% center;
+    display:block;
+  }
+  .hero-img::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, var(--bg) 0%, rgba(250,250,247,0) 18%);
+  }
+
+  @media (max-width: 860px){
+    .hero{flex-direction:column;min-height:auto;}
+    .hero-copy{flex:none;padding:56px 24px 32px;gap:20px;}
+    .hero-img{min-height:56vh;}
+    .hero-img img{object-position:64% 30%;}
+    .hero-img::before{background:linear-gradient(180deg, var(--bg) 0%, rgba(250,250,247,0) 14%);}
+  }
+
+  @media (max-width: 640px){
+    .wrap{padding:0 20px;}
+    .narrow{padding:0 20px;}
+    section{padding:56px 0;}
+    section.tight{padding:40px 0;}
+    .story p, .lede p{font-size:16px;line-height:1.95;}
+    h2.section-title{font-size:20px;}
+    .case-grid{grid-template-columns:1fr 1fr;gap:10px;}
+    .case-card{padding:16px 14px;}
+    .case-card p{font-size:13px;}
+    .badge-row{gap:8px;}
+    .badge{font-size:12px;padding:8px 14px;}
+    .truth-item{gap:14px;}
+    .truth-num{font-size:22px;min-width:28px;}
+    .layer-box{padding:18px 20px;}
+    .cta-button{display:block;width:100%;}
+    .offer-box{padding:22px 18px;font-size:13px;}
+  }
+
+  @media (max-width: 400px){
+    .case-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---- Sections ---- */
+  section{padding:88px 0;}
+  section.tight{padding:56px 0;}
+  .story p, .lede p{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:18px;
+    line-height:1.95;
+    color:var(--ink);
+    margin:0 0 22px;
+  }
+  .story p:last-child, .lede p:last-child{margin-bottom:0;}
+  .story .muted, .lede .muted{color:var(--ink-muted);}
+
+  .divider{
+    height:1px;
+    background:var(--line);
+    margin:0;
+  }
+
+  /* ---- Layer diagram ---- */
+  .layer-heading{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:15px;
+    text-align:center;
+    color:var(--ink);
+    max-width:640px;
+    margin:40px auto 0;
+  }
+  .layer-diagram{margin:16px auto 0;max-width:640px;}
+  .layer-box{
+    border-radius:14px;
+    padding:22px 28px;
+    text-align:center;
+  }
+  .layer-box.know{background:var(--blue);border:none;}
+  .layer-box.act{background:var(--pink);border:none;margin-top:64px;}
+  .layer-box .t{font-family:var(--serif);font-weight:700;font-size:16px;color:#fff;margin:0 0 6px;}
+  .layer-box .s{font-size:13px;color:rgba(255,255,255,0.85);margin:0;}
+  .layer-gap{
+    position:relative;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .layer-gap .line{position:absolute;top:50%;width:38%;height:1px;background:var(--ink-faint);opacity:0.7;}
+  .layer-gap .line.l{left:0;}
+  .layer-gap .line.r{right:0;}
+  .layer-gap .x{font-size:14px;color:var(--ink-faint);position:relative;z-index:1;background:var(--bg);padding:0 10px;}
+  .layer-gap-label{text-align:center;font-size:13px;color:var(--ink-muted);margin-top:-8px;}
+
+  /* ---- CASE grid ---- */
+  .case-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:14px;
+    margin-top:40px;
+  }
+  .case-card{
+    border:none;
+    border-radius:12px;
+    padding:22px 20px;
+    background:var(--blue);
+  }
+  .case-card .num{
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--blue);
+    background:#fff;
+    display:inline-block;
+    padding:4px 12px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .case-card p{font-size:14px;font-weight:500;color:#fff;margin:0;}
+
+  /* ---- Badges ---- */
+  .badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;}
+  .badge{
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:9px 18px;
+    font-size:13px;
+    color:var(--ink-muted);
+  }
+
+  /* ---- Timeline ---- */
+  .timeline{margin-top:40px;padding-left:22px;border-left:1px solid var(--line);}
+  .tl-item{position:relative;padding-bottom:32px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:"";
+    position:absolute;left:-27px;top:6px;
+    width:9px;height:9px;border-radius:50%;
+    background:var(--ink-faint);
+  }
+  .tl-item.now::before{background:var(--amber);}
+  .tl-item .when{font-size:12px;color:var(--ink-faint);margin:0 0 4px;}
+  .tl-item .what{font-size:15px;margin:0;}
+
+  /* ---- TRUTH ---- */
+  .truth-list{margin-top:36px;display:flex;flex-direction:column;gap:14px;}
+  .truth-item{
+    display:flex;gap:20px;
+    border-top:1px solid var(--line);
+    padding-top:20px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .truth-item:first-child{border-top:none;padding-top:0;}
+  .truth-item.revealed{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .truth-item{opacity:1;transform:none;transition:none;}
+  }
+  .truth-num{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:26px;
+    color:var(--blue);
+    min-width:34px;
+  }
+  .truth-item .t{font-size:15px;font-weight:700;margin:0 0 6px;}
+  .truth-item .s{font-size:13px;color:var(--ink-muted);margin:0;}
+
+  /* ---- Before/After ---- */
+  .ba-list{margin-top:40px;display:flex;flex-direction:column;gap:14px;}
+  .ba-row{
+    display:grid;
+    grid-template-columns:1fr 32px 1fr;
+    align-items:center;
+    gap:8px;
+  }
+  .ba-box{
+    border-radius:12px;
+    padding:18px 20px;
+    font-size:14px;
+    font-weight:500;
+  }
+  .ba-box.before{background:var(--ink-faint);border:none;color:#fff;}
+  .ba-box.after{background:var(--blue);border:none;color:#fff;font-weight:700;}
+  .ba-arrow{text-align:center;color:var(--ink-faint);font-size:18px;font-weight:700;}
+  .ba-legend{display:flex;gap:20px;font-size:12px;color:var(--ink-faint);margin-top:24px;}
+  .ba-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .dot.g{background:var(--ink-faint);}
+  .dot.t{background:var(--blue);}
+  @media (max-width:560px){
+    .ba-row{grid-template-columns:1fr;}
+    .ba-arrow{transform:rotate(90deg);}
+  }
+
+  /* ---- Offer / CTA ---- */
+  .offer-box{
+    margin-top:40px;
+    border:1px dashed var(--line);
+    border-radius:14px;
+    padding:28px;
+    color:var(--ink-faint);
+    font-size:14px;
+    text-align:center;
+  }
+  .cta{
+    margin-top:40px;
+    text-align:center;
+  }
+  .cta-button{
+    display:inline-block;
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:15px;
+    color:var(--bg);
+    background:var(--ink);
+    padding:16px 40px;
+    border-radius:999px;
+    text-decoration:none;
+  }
+
+  .section-label{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    color:var(--ink-faint);
+    margin:0 0 8px;
+  }
+  h2.section-title{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:24px;
+    margin:0;
+  }
+
+  footer{
+    padding:48px 0;
+    text-align:center;
+    color:var(--ink-faint);
+    font-size:12px;
+  }
+  .footer-logo{height:34px;width:auto;opacity:0.85;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-copy">
+    <img src="logo-binoh.png" alt="美脳調律プログラム" class="hero-logo">
+    <h1>キャリア、恋活・婚活、そして人間関係。<br>すべてのリミッターを、<span class="accent">メタ周波数</span>で外す。</h1>
+    <p>頑張っているのに、変わらない。学び続けているのに、現実は動かない。心理学を学んでも、カウンセリングを受けても、気持ちは楽になったけど現実は変わらなかった。——その理由が、ここにあります。</p>
+  </div>
+  <div class="hero-img">
+    <img src="goddess-bright.jpg" alt="ネオンの回路が肌に浮かぶ美脳のビジュアル">
+  </div>
+</div>
+
+<section class="tight">
+  <div class="narrow story">
+    <p>30年近く、広告・マーケティングの現場で見てきたのは、戦略が正しいだけでは機能しない瞬間。</p>
+    <p>対人コミュニケーションの現場でも、同じことが起きていました。論理的に正しい提案が、なぜか実行されない。善かれ、と思ったことが、受け入れられない。</p>
+    <p class="muted">その原因は、伝え方でも、能力でもありませんでした。</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section class="tight">
+  <div class="narrow lede">
+    <p>人生分岐点。違和感、不安。本当に今の選択でいいのか。</p>
+    <p>その違和感、その不安を——「知覚の揺らぎ」だと、疑ってみてください。未来側から、人生とキャリアの選択を、変えていく。</p>
+    <p class="muted">恋愛、仕事、親子、友人関係。一見まったく別の出来事でも、同じ人の中では同じ構造が繰り返されていることがあります。美脳が見るのは、失敗した一場面ではありません。その人が何を見て、どう反応し、なぜ同じ場所へ戻ってくるのか。その構造を一緒に見つけ、今まで選べなかった方向まで、可動域を広げていきます。</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="section-label">③ よくある悩み</p>
+    <h2 class="section-title">あなたにも、こんな悩みはありませんか。</h2>
+    <div class="case-grid">
+      <div class="case-card"><span class="num">CASE 1</span><p>このままでいいのか、迷っている。でも、動けない。</p></div>
+      <div class="case-card"><span class="num">CASE 2</span><p>人生の分岐点で、「後悔する選択」はしたくない。なのに、決め手が見つからない。</p></div>
+      <div class="case-card"><span class="num">CASE 3</span><p>自己理解も、キャリア分析も、やった。転職したとしても——本当にやりたい方向が、満たされる気がしない。</p></div>
+      <div class="case-card"><span class="num">CASE 4</span><p>副業、起業、婚活・恋活。始めたい気持ちはある。なのに、動けない。</p></div>
+      <div class="case-card"><span class="num">CASE 5</span><p>強みは、わかった。わかっても——年収アップにつながるところまで、行動できない。</p></div>
+    </div>
+    <div class="narrow story" style="margin-top:48px;">
+      <p class="muted">——気づいていますか。どのケースにも、共通していることがあります。</p>
+      <p>「わかっている」のに、「動けない」。</p>
+      <p class="muted">それは、あなたの意志が弱いからではありません。わかること(知識)と、動くこと(実行)は、そもそも違う層にあるからです。自己理解も、キャリア分析も、強み診断も——すべて、知識の層で起きていること。でも、動けるかどうかを決めているのは、その一段下、実行の層。いくら知識の層を磨いても、実行の層には、届きません。</p>
+    </div>
+
+    <p class="layer-heading">IQとアクションの中間層</p>
+    <div class="layer-diagram">
+      <div class="layer-box know">
+        <p class="t">知識の層</p>
+        <p class="s">わかっている、理解している</p>
+      </div>
+      <div class="layer-gap">
+        <span class="line l"></span><span class="x">×</span><span class="line r"></span>
+      </div>
+      <p class="layer-gap-label">知識と実行のあいだに、橋がかかっていない</p>
+      <div class="layer-box act">
+        <p class="t">実行の層</p>
+        <p class="s">動ける、変わる</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="section-label">⑤ プログラムの背景</p>
+    <h2 class="section-title">未來からの逆算設計</h2>
+    <div class="narrow story" style="margin-top:32px;padding-left:0;">
+      <p class="muted">美脳調律プログラムは、数十年の広告・マーケティング実務と、個人・小規模経営における対人コミュニケーションの実践知から立ち上がったものですが、設計の起点は過去の分析ではありません。「動けている未来」の状態から、今の構造を逆算して組み立てています。理論のための理論ではなく、現場で繰り返し見えてきた「見落とされやすい構造」を、その逆算の中に組み込んだプログラムです。</p>
+    </div>
+    <div class="badge-row">
+      <span class="badge">個人・小規模経営 コンサル経験</span>
+      <span class="badge">大企業 チームスタッド</span>
+      <span class="badge">リテラシー</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="when">約30年前</p>
+        <p class="what">広告・マーケティングの現場に入る</p>
+      </div>
+      <div class="tl-item">
+        <p class="when">その後</p>
+        <p class="what">個人・小規模経営の対人コミュニケーション実務へ</p>
+      </div>
+      <div class="tl-item now">
+        <p class="when">現在</p>
+        <p class="what">美脳調律プログラムとして設計</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="section-label">⑥ 逆説の真実</p>
+    <h2 class="section-title">TRUTH</h2>
+    <div class="truth-list">
+      <div class="truth-item">
+        <span class="truth-num">1</span>
+        <div>
+          <p class="t">情報を増やせば動ける、は正しくありません。</p>
+          <p class="s">情報が増えるほど、判断が止まることがあります。</p>
+        </div>
+      </div>
+      <div class="truth-item">
+        <span class="truth-num">2</span>
+        <div>
+          <p class="t">努力すれば変わる、も正しくありません。</p>
+          <p class="s">努力するほど、同じ結果に戻ることがあります。</p>
+        </div>
+      </div>
+      <div class="truth-item">
+        <span class="truth-num">3</span>
+        <div>
+          <p class="t">変化を生むのは、「理解」ではありません。</p>
+          <p class="s">理解した先の、「わかっているのに、できない」を超える設計です。</p>
+        </div>
+      </div>
+      <div class="truth-item">
+        <span class="truth-num">4</span>
+        <div>
+          <p class="t">客観視は、鍛えるものではありません。</p>
+          <p class="s">知識と実行のあいだに差が生まれるのは、見えている次元が違うから。知識は頭の中の次元で、実行は関係の中の周波数で成立します。メタ視点とは、知識の次元から実行の次元(周波数)に、合わせ直すことです。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="section-label">⑦ Before / After</p>
+    <h2 class="section-title">動き出した先にある景色。</h2>
+    <div class="ba-list">
+      <div class="ba-row">
+        <div class="ba-box before">意思決定に迷っていた</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-box after">同じ迷いが来ても、すぐに動き出せている</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-box before">同じ結果を繰り返していた</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-box after">違う選択ができるようになる</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-box before">関係の中で消耗していた</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-box after">関係の中でも、自分を保ったまま動けている</div>
+      </div>
+    </div>
+    <div class="ba-legend">
+      <span><span class="dot g"></span>before</span>
+      <span><span class="dot t"></span>after</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="narrow">
+    <p class="section-label" style="text-align:center;">⑧ 特典</p>
+    <div class="offer-box">
+      実際に提供する診断・セッション形態が決まり次第、ここに具体化します。
+    </div>
+
+    <div class="cta">
+      <a href="#" class="cta-button">診断してみる</a>
+      <p style="font-size:12px;color:var(--ink-faint);margin-top:16px;">※ 申込導線(診断ページ誘導 / 個別セッション招待)が決まり次第、リンク先を差し替えます</p>
+    </div>
+  </div>
+</section>
+
+<footer><img src="logo-binoh.png" alt="美脳調律プログラム" class="footer-logo"></footer>
+
+<script>
+  (function(){
+    var items = document.querySelectorAll('.truth-item');
+    if (!('IntersectionObserver' in window) || !items.length) {
+      items.forEach(function(el){ el.classList.add('revealed'); });
+      return;
+    }
+    items.forEach(function(el, i){
+      el.style.transitionDelay = (i * 0.12) + 's';
+    });
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    items.forEach(function(el){ observer.observe(el); });
+  })();
+</script>
+</body>
+</html>
